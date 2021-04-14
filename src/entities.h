@@ -30,6 +30,7 @@ class SpriteBase
 		void Render(Vector2 position, float orient=0) {
 			DrawTexture(texture, position.x, position.y, WHITE);
 		};
+		void Render(Vector2 A, Vector2 B, Vector2 C, Vector2 D);
 	private:
 		Texture2D texture;
 };

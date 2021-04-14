@@ -9,6 +9,14 @@ SpriteBase::SpriteBase(const char* texturefp)
 	texture = LoadTexture(texturefp);
 }
 
+void SpriteBase::Render(Vector2 A, Vector2 B, Vector2 C, Vector2 D)
+{
+	DrawLineV(A, B, RED);
+	DrawLineV(B, C, RED);
+	DrawLineV(C, D, RED);
+	DrawLineV(D, A, RED);
+}
+
 EntityBase::EntityBase(Vector2 position)
 {
 	physBody = CreatePhysicsBodyRectangle(position, SPRITE_WIDTH, SPRITE_HEIGHT, 1);
@@ -29,7 +37,10 @@ int EntityBase::GetRotation()
 void EntityBase::Render()
 {
 	sprite.Render(
-		physBody->position
+		GetPhysicsShapeVertex(physBody, 0),
+		GetPhysicsShapeVertex(physBody, 1),
+		GetPhysicsShapeVertex(physBody, 2),
+		GetPhysicsShapeVertex(physBody, 3)
 	);
 }
 

@@ -28,6 +28,11 @@ int main(void)
     // Create the player
     EntityPlayer player = EntityPlayer(Vector2({0,0}));
 
+
+    // Test floor, purely defined in physics
+    PhysicsBody floor = CreatePhysicsBodyRectangle(Vector2({0,128}), 100, 32, 1);
+    floor->enabled = false;
+
     // Main game loop
     while (!WindowShouldClose())
     {
