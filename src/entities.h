@@ -48,6 +48,13 @@ class EntityBase
 
 		PhysicsBody GetPhysicsBody();
 
+		// Called at the start of a frame
+		void PreThink(float delta) {};
+		// Called after physics, but before rendering
+		void Think(float delta) {};
+		// Called at the end of a frame
+		void PostThink(float delta) {};
+
 	protected:
 		SpriteBase sprite = NULL;
 

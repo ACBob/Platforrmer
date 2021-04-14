@@ -3,9 +3,11 @@
 
 #include "entities.h"
 
+
+#include <vector>
+
 #define PHYSAC_IMPLEMENTATION
 #include "physac.h"
-
 
 int main(void)
 {
@@ -13,8 +15,6 @@ int main(void)
     const int screenHeight = 416; // 416 fits in a 16x16 grid
 
     InitWindow(screenWidth, screenHeight, "Platforrmer");
-
-    SetTargetFPS(60);
 
     // Camera
     Camera2D Camera = Camera2D();
@@ -26,8 +26,11 @@ int main(void)
     InitPhysics();
     SetPhysicsTimeStep(2);
 
+    std::vector<EntityBase*> entities;
+
     // Create the player
     EntityPlayer player = EntityPlayer(Vector2({0,0}));
+    entities.push_back(&player);
 
 
     // Test floor, purely defined in physics
@@ -37,25 +40,30 @@ int main(void)
     // Main game loop
     while (!WindowShouldClose())
     {
+        float delta = GetFrameTime();
+        for (auto entity : entities)
+        {
+            entity->PreThink(delta);
+        }
+
         PhysicsStep();
 
         Camera.target = player.GetPosition();
 
-        if(IsKeyDown(KEY_RIGHT))
-            PhysicsAddForce(player.GetPhysicsBody(), Vector2({32,0}));
-        if(IsKeyDown(KEY_LEFT))
-            PhysicsAddForce(player.GetPhysicsBody(), Vector2({-32,0}));
-        if(IsKeyDown(KEY_UP))
-            PhysicsAddForce(player.GetPhysicsBody(), Vector2({0,-32}));
-        if(IsKeyDown(KEY_DOWN))
-            PhysicsAddForce(player.GetPhysicsBody(), Vector2({0,32}));
+        for (auto entity : entities)
+        {
+            entity->Think(delta);
+        }
 
         BeginDrawing();
             ClearBackground(SKYBLUE);
 
             BeginMode2D(Camera);
 
-                player.Render();
+                for (auto entity : entities)
+                {
+                    entity->Render();
+                }
 
                 DrawCircle(800/2, 416/2, 100, RED);
                 DrawRectangle(-50,112,100,32,RED);
@@ -63,6 +71,11 @@ int main(void)
             EndMode2D();
 
         EndDrawing();
+
+        for (auto entity : entities)
+        {
+            entity->PostThink(delta);
+        }
     }
 
     ClosePhysics();
