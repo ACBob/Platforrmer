@@ -45,6 +45,8 @@ int main(void)
 
             BeginMode2D(Camera);
 
+                daWorld.Render();
+
                 DrawCircle(800/2, 416/2, 100, RED);
                 DrawRectangle(-50,112,100,32,RED);
 

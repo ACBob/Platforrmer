@@ -33,10 +33,7 @@ class SpriteBase
 		~SpriteBase() {};
 
 		// Renders the sprite
-		void Render(Vector2 position, float orient=0) {
-			DrawTexture(texture, position.x, position.y, WHITE);
-		};
-		void Render(Vector2 A, Vector2 B, Vector2 C, Vector2 D);
+		void Render(Vector2 position, float orient=0);
 	private:
 		Texture2D texture;
 };
@@ -90,13 +87,10 @@ class EntityWorld
 		};
 		~EntityWorld()
 		{
-			// Delete the entities, then the list
-			for (auto ent : entlist)
-				delete ent;
 			entlist.clear();
 		};
 
-		void AddEntity(EntityBase *enttoadd)
+		void AddEntity(EntityBase enttoadd)
 		{
 			entlist.push_back(enttoadd);
 
@@ -106,9 +100,9 @@ class EntityWorld
 			}
 		};
 
-		static bool ShouldRemove(EntityBase *ent)
+		static bool ShouldRemove(EntityBase ent)
 		{
-			return ent->isDead;
+			return ent.isDead;
 		};
 
 		void Update(float delta)
@@ -126,9 +120,17 @@ class EntityWorld
 
 			for (auto ent : entlist)
 			{
-				ent->Think(delta);
+				ent.Think(delta);
 			}
 
+		};
+
+		void Render()
+		{
+			for (auto ent : entlist)
+			{
+				ent.Render();
+			}
 		};
 
 		// Creates, Adds, and returns a new Entity of type
@@ -139,13 +141,13 @@ class EntityWorld
 			T ent = T();
 
 			// Start tracking it
-			AddEntity(&ent);
+			AddEntity(ent);
 
 			return &ent;
 		};
 
 	protected:
-		std::vector<EntityBase*> entlist;
+		std::vector<EntityBase> entlist;
 		b2World *physicsworld;
 
 };

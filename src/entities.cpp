@@ -11,12 +11,9 @@ SpriteBase::SpriteBase(const char* texturefp)
 	texture = LoadTexture(texturefp);
 }
 
-void SpriteBase::Render(Vector2 A, Vector2 B, Vector2 C, Vector2 D)
-{
-	DrawLineV(A, B, RED);
-	DrawLineV(B, C, RED);
-	DrawLineV(C, D, RED);
-	DrawLineV(D, A, RED);
+void SpriteBase::Render(Vector2 position, float orient) {
+	DrawTextureEx(texture, position, orient, 1, WHITE);
+	DrawCircle(position.x, position.y, 10, RED);
 }
 
 EntityBase::EntityBase()
@@ -40,7 +37,7 @@ int EntityBase::GetRotation()
 
 void EntityBase::Render()
 {
-	sprite.Render(GetPosition());
+	sprite.Render(GetPosition(), GetRotation());
 }
 
 b2Body *EntityBase::GetPhysicsBody()
