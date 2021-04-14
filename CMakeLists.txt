@@ -13,13 +13,17 @@ find_package(OpenGL REQUIRED)
 find_package(glfw3 3.3 REQUIRED)
 
 # Includes
-include_directories(
-	${PROJECT_SOURCE_DIR}/include
+set(includes
+	include
 )
+list(TRANSFORM includes PREPEND "src/")
+include_directories(${includes})
 
 set(sources
 	main.cpp
+	glad.c
 )
+list(TRANSFORM sources PREPEND "src/")
 
 add_executable(${PROJECT_NAME} ${sources})
-target_link_libraries(${PROJECT_NAME} glfw OpenGL::GL)
+target_link_libraries(${PROJECT_NAME} glfw OpenGL::GL dl)
