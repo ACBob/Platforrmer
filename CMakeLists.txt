@@ -25,6 +25,8 @@ set(sources
 	glad.c
 
 	render/platform/platform_glfw.cpp
+	render/opengl/opengl_render.cpp
+	render/render.cpp
 )
 list(TRANSFORM sources PREPEND "src/")
 
