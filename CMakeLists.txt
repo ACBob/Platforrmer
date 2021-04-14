@@ -26,6 +26,7 @@ add_subdirectory(src/thirdparty/box2d)
 set(includes
 	include
 	.
+	thirdparty/box2d/include
 )
 list(TRANSFORM includes PREPEND "src/")
 include_directories(${includes})
@@ -37,4 +38,4 @@ set(sources
 list(TRANSFORM sources PREPEND "src/")
 
 add_executable(${PROJECT_NAME} ${sources})
-target_link_libraries(${PROJECT_NAME} raylib pthread)
+target_link_libraries(${PROJECT_NAME} raylib pthread box2d)

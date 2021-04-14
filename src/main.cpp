@@ -4,8 +4,7 @@
 #include "entities.h"
 #include <vector>
 
-#define PHYSAC_IMPLEMENTATION
-#include "physac.h"
+#include "box2d/box2d.h"
 
 int main(void)
 {
@@ -25,47 +24,23 @@ int main(void)
     Camera.offset = Vector2({screenWidth/2, screenHeight/2});
     Camera.zoom = 1.5f;
 
-    InitPhysics();
-    SetPhysicsTimeStep(2);
+    EntityWorld daWorld;
 
-    std::vector<EntityBase*> entities;
-
-    // Create the player
-    EntityPlayer player = EntityPlayer(Vector2({0,0}));
-    entities.push_back(&player);
-
-
-    // Test floor, purely defined in physics
-    PhysicsBody floor = CreatePhysicsBodyRectangle(Vector2({0,128}), 100, 32, 1);
-    floor->enabled = false;
-
+    EntityPlayer *player = daWorld.NewEntity<EntityPlayer>();
+    
     // Main game loop
     while (!WindowShouldClose())
     {
         float delta = GetFrameTime();
-        for (auto entity : entities)
-        {
-            entity->PreThink(delta);
-        }
 
-        PhysicsStep();
+        Camera.target = player->GetPosition();
 
-        Camera.target = player.GetPosition();
-
-        for (auto entity : entities)
-        {
-            entity->Think(delta);
-        }
+        daWorld.Update(delta);
 
         BeginDrawing();
             ClearBackground(SKYBLUE);
 
             BeginMode2D(Camera);
-
-                for (auto entity : entities)
-                {
-                    entity->Render();
-                }
 
                 DrawCircle(800/2, 416/2, 100, RED);
                 DrawRectangle(-50,112,100,32,RED);
@@ -73,14 +48,8 @@ int main(void)
             EndMode2D();
 
         EndDrawing();
-
-        for (auto entity : entities)
-        {
-            entity->PostThink(delta);
-        }
     }
 
-    ClosePhysics();
     CloseWindow();
 
     return 0;

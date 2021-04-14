@@ -3,7 +3,10 @@
 #pragma once
 
 #include "raylib.h"
-#include "physac.h"
+#include "box2d/box2d.h"
+
+#include <vector>
+#include <algorithm>
 
 
 #define NULL 0
@@ -17,6 +20,7 @@ enum {
 	TL_GRND, // Regular Ground
 	TL_ICE, // Slippy
 } TileType;
+
 
 
 // Visual Base for Entities
@@ -39,14 +43,17 @@ class EntityBase
 {
 	public:
 		EntityBase(Vector2 position);
-		~EntityBase() {};
+		~EntityBase()
+		{
+			physBody = nullptr;
+		};
 
 		void Render();
 
 		Vector2 GetPosition();
 		int GetRotation();
 
-		PhysicsBody GetPhysicsBody();
+		b2Body *GetPhysicsBody();
 
 		// Called at the start of a frame
 		virtual void PreThink(float delta) {};
@@ -55,11 +62,75 @@ class EntityBase
 		// Called at the end of a frame
 		virtual void PostThink(float delta) {};
 
+		// Set to true to remove.
+		// Should test against this when accessing.
+		bool isDead;
+
 	protected:
 		SpriteBase sprite = NULL;
 
 		// Physics Body
-		PhysicsBody physBody;
+		b2Body *physBody;
+};
+
+// Holds the list of entities, Box2D world, etc.
+// Pretty much just an entity system
+class EntityWorld
+{
+	public: 
+		EntityWorld(float hgrav=0.0f, float vgrav=-9.8f) {
+			// Create the box2d world
+			b2World world(b2Vec2(hgrav, vgrav));
+			physicsworld = &world;
+		};
+		~EntityWorld()
+		{
+			delete physicsworld;
+		};
+
+		void AddEntity(EntityBase *enttoadd)
+		{
+			entlist.push_back(enttoadd);
+		};
+
+		static bool ShouldRemove(EntityBase *ent)
+		{
+			return ent->isDead;
+		};
+
+		void Update(float delta)
+		{
+			// First clear out dead entities
+			entlist.erase(
+				std::remove_if(
+					entlist.begin(),
+					entlist.end(),
+					ShouldRemove
+				),
+				entlist.end()
+			);
+
+			for (auto ent : entlist)
+			{
+				ent->Think(delta);
+			}
+
+		};
+
+		// Creates, Adds, and returns a new Entity of type
+		template <typename T>
+		T *NewEntity()
+		{
+			T ent = T( Vector2({0,0}) );
+			AddEntity(&ent);
+
+			return &ent;
+		};
+
+	protected:
+		std::vector<EntityBase*> entlist;
+		b2World *physicsworld;
+
 };
 
 class EntityPlayer : public EntityBase

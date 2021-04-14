@@ -21,32 +21,29 @@ void SpriteBase::Render(Vector2 A, Vector2 B, Vector2 C, Vector2 D)
 
 EntityBase::EntityBase(Vector2 position)
 {
-	physBody = CreatePhysicsBodyRectangle(position, SPRITE_WIDTH, SPRITE_HEIGHT, 1);
+	physBody = NULL;
 
 	sprite = SpriteBase("test.png");
 }
 
 Vector2 EntityBase::GetPosition()
 {
-	return physBody->position;
+	b2Vec2 pos = physBody->GetPosition();
+	return Vector2({pos.x, pos.y});
 }
 
 int EntityBase::GetRotation()
 {
-	return physBody->orient;
+	// return physBody->orient;
+	return 0;
 }
 
 void EntityBase::Render()
 {
-	sprite.Render(
-		GetPhysicsShapeVertex(physBody, 0),
-		GetPhysicsShapeVertex(physBody, 1),
-		GetPhysicsShapeVertex(physBody, 2),
-		GetPhysicsShapeVertex(physBody, 3)
-	);
+	sprite.Render(GetPosition());
 }
 
-PhysicsBody EntityBase::GetPhysicsBody()
+b2Body *EntityBase::GetPhysicsBody()
 {
 	return physBody;
 }
@@ -54,29 +51,29 @@ PhysicsBody EntityBase::GetPhysicsBody()
 
 EntityPlayer::EntityPlayer(Vector2 position) : EntityBase(position)
 {
-	// Don't spin
-	physBody->freezeOrient = true;
+	// // Don't spin
+	// physBody->freezeOrient = true;
 }
 
 void EntityPlayer::PreThink(float delta)
 {
-	// Handle input
-	if (IsKeyPressed(KEY_RIGHT))
-	{
-		physBody->velocity.x = 1;
-	}
-	else if (IsKeyPressed(KEY_LEFT))
-	{
-		physBody->velocity.x = -1;
-	}
+	// // Handle input
+	// if (IsKeyPressed(KEY_RIGHT))
+	// {
+	// 	physBody->velocity.x = 1;
+	// }
+	// else if (IsKeyPressed(KEY_LEFT))
+	// {
+	// 	physBody->velocity.x = -1;
+	// }
 
-	if (IsKeyReleased(KEY_RIGHT) || IsKeyReleased(KEY_LEFT))
-	{
-		physBody->velocity.x = 0;
-	}
+	// if (IsKeyReleased(KEY_RIGHT) || IsKeyReleased(KEY_LEFT))
+	// {
+	// 	physBody->velocity.x = 0;
+	// }
 
-	if (IsKeyPressed(KEY_UP) && physBody->isGrounded)
-	{
-		physBody->velocity.y = -32;
-	}
+	// if (IsKeyPressed(KEY_UP) && physBody->isGrounded)
+	// {
+	// 	physBody->velocity.y = -32;
+	// }
 }
