@@ -83,7 +83,9 @@ class EntityWorld
 		};
 		~EntityWorld()
 		{
-			delete physicsworld;
+			for (auto ent : entlist)
+				delete ent;
+			entlist.clear();
 		};
 
 		void AddEntity(EntityBase *enttoadd)
