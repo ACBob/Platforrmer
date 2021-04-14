@@ -2,8 +2,6 @@
 #include "raylib.h"
 
 #include "entities.h"
-
-
 #include <vector>
 
 #define PHYSAC_IMPLEMENTATION
@@ -15,6 +13,8 @@ int main(void)
     const int screenHeight = 416; // 416 fits in a 16x16 grid
 
     InitWindow(screenWidth, screenHeight, "Platforrmer");
+    
+    SetTargetFPS(60);
 
     // Camera
     Camera2D Camera = Camera2D();

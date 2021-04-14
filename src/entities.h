@@ -49,11 +49,11 @@ class EntityBase
 		PhysicsBody GetPhysicsBody();
 
 		// Called at the start of a frame
-		void PreThink(float delta) {};
+		virtual void PreThink(float delta) {};
 		// Called after physics, but before rendering
-		void Think(float delta) {};
+		virtual void Think(float delta) {};
 		// Called at the end of a frame
-		void PostThink(float delta) {};
+		virtual void PostThink(float delta) {};
 
 	protected:
 		SpriteBase sprite = NULL;
@@ -66,4 +66,6 @@ class EntityPlayer : public EntityBase
 {
 	public:
 		EntityPlayer(Vector2 position);
+
+		void PreThink(float delta);
 };

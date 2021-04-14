@@ -3,6 +3,8 @@
 #include "raylib.h"
 #include "entities.h"
 
+#include <cstdio>
+
 SpriteBase::SpriteBase(const char* texturefp)
 {
 	// TODO: Material system
@@ -54,4 +56,22 @@ EntityPlayer::EntityPlayer(Vector2 position) : EntityBase(position)
 {
 	// Don't spin
 	physBody->freezeOrient = true;
+}
+
+void EntityPlayer::PreThink(float delta)
+{
+	// Handle input
+	if (IsKeyPressed(KEY_RIGHT))
+	{
+		physBody->velocity.x = 1;
+	}
+	else if (IsKeyPressed(KEY_LEFT))
+	{
+		physBody->velocity.x = -1;
+	}
+
+	if (IsKeyReleased(KEY_RIGHT) || IsKeyReleased(KEY_LEFT))
+	{
+		physBody->velocity.x = 0;
+	}
 }
