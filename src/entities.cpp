@@ -16,9 +16,22 @@ void SpriteBase::Render(Vector2 position, float orient) {
 	DrawCircle(position.x, position.y, 10, RED);
 }
 
-EntityBase::EntityBase()
+EntityBase::EntityBase(b2World *world)
 {
 	physBody = NULL;
+
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody;
+	bodyDef.position.Set(0.0f, 0.0);
+	physBody = world->CreateBody(&bodyDef);
+
+	b2PolygonShape shape;
+	shape.SetAsBox(1,1);
+
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &shape;
+	fixtureDef.density = 1;
+	physBody->CreateFixture(&fixtureDef);
 
 	sprite = SpriteBase("test.png");
 }
@@ -46,7 +59,7 @@ b2Body *EntityBase::GetPhysicsBody()
 }
 
 
-EntityPlayer::EntityPlayer() : EntityBase()
+EntityPlayer::EntityPlayer(b2World *world) : EntityBase(world)
 {
 	// // Don't spin
 	// physBody->freezeOrient = true;

@@ -41,7 +41,7 @@ class SpriteBase
 class EntityBase
 {
 	public:
-		EntityBase();
+		EntityBase(b2World *world);
 		~EntityBase()
 		{
 			physBody = nullptr;
@@ -78,12 +78,12 @@ class EntityBase
 class EntityWorld
 {
 	public: 
-		EntityWorld(float hgrav=0.0f, float vgrav=-9.8f) {
+		EntityWorld(float hgrav=0.0f, float vgrav=-9.8f)
+		{
 			// Create the box2d world
-			b2World world(b2Vec2(hgrav, vgrav));
-			physicsworld = &world;
+			physicsworld = new b2World(b2Vec2(hgrav, vgrav));
 
-			entlist.reserve(MAXENTS);
+			// entlist.reserve(MAXENTS);
 		};
 		~EntityWorld()
 		{
@@ -96,7 +96,6 @@ class EntityWorld
 
 			if (entlist.size() > MAXENTS) {
 				LOG_F(FATAL, "Panic! Too many Entities!\n");
-				// TODO: panic
 			}
 		};
 
@@ -123,6 +122,10 @@ class EntityWorld
 				ent.Think(delta);
 			}
 
+			// Do physics
+			// TODO: get step from framerate
+			physicsworld->Step(1.0f/60.0f, 6, 2);
+
 		};
 
 		void Render()
@@ -138,8 +141,8 @@ class EntityWorld
 		T *NewEntity()
 		{
 			// Create it
-			T ent = T();
-
+			T ent = T(physicsworld);
+		
 			// Start tracking it
 			AddEntity(ent);
 
@@ -155,7 +158,7 @@ class EntityWorld
 class EntityPlayer : public EntityBase
 {
 	public:
-		EntityPlayer();
+		EntityPlayer(b2World *world);
 
 		void PreThink(float delta);
 };
