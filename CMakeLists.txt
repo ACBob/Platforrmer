@@ -27,6 +27,7 @@ include_directories(${includes})
 
 set(sources
 	main.cpp
+	thirdparty/physac.h
 )
 list(TRANSFORM sources PREPEND "src/")
 
