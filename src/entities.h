@@ -46,6 +46,8 @@ class EntityBase
 		Vector2 GetPosition();
 		int GetRotation();
 
+		PhysicsBody GetPhysicsBody();
+
 	protected:
 		SpriteBase sprite = NULL;
 

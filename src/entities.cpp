@@ -44,7 +44,14 @@ void EntityBase::Render()
 	);
 }
 
+PhysicsBody EntityBase::GetPhysicsBody()
+{
+	return physBody;
+}
+
 
 EntityPlayer::EntityPlayer(Vector2 position) : EntityBase(position)
 {
+	// Don't spin
+	physBody->freezeOrient = true;
 }

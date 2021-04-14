@@ -24,6 +24,7 @@ int main(void)
     Camera.zoom = 1.0f;
 
     InitPhysics();
+    SetPhysicsTimeStep(2);
 
     // Create the player
     EntityPlayer player = EntityPlayer(Vector2({0,0}));
@@ -40,6 +41,15 @@ int main(void)
 
         Camera.target = player.GetPosition();
 
+        if(IsKeyDown(KEY_RIGHT))
+            PhysicsAddForce(player.GetPhysicsBody(), Vector2({32,0}));
+        if(IsKeyDown(KEY_LEFT))
+            PhysicsAddForce(player.GetPhysicsBody(), Vector2({-32,0}));
+        if(IsKeyDown(KEY_UP))
+            PhysicsAddForce(player.GetPhysicsBody(), Vector2({0,-32}));
+        if(IsKeyDown(KEY_DOWN))
+            PhysicsAddForce(player.GetPhysicsBody(), Vector2({0,32}));
+
         BeginDrawing();
             ClearBackground(SKYBLUE);
 
@@ -48,12 +58,14 @@ int main(void)
                 player.Render();
 
                 DrawCircle(800/2, 416/2, 100, RED);
+                DrawRectangle(-50,112,100,32,RED);
 
             EndMode2D();
 
         EndDrawing();
     }
 
+    ClosePhysics();
     CloseWindow();
 
     return 0;
