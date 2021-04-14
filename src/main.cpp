@@ -12,8 +12,10 @@ int main(void)
     const int screenWidth = 800;
     const int screenHeight = 416; // 416 fits in a 16x16 grid
 
+    SetConfigFlags(FLAG_MSAA_4X_HINT);
     InitWindow(screenWidth, screenHeight, "Platforrmer");
     
+
     SetTargetFPS(60);
 
     // Camera
@@ -21,7 +23,7 @@ int main(void)
 
     Camera.target = Vector2({0,0});
     Camera.offset = Vector2({screenWidth/2, screenHeight/2});
-    Camera.zoom = 1.0f;
+    Camera.zoom = 1.5f;
 
     InitPhysics();
     SetPhysicsTimeStep(2);

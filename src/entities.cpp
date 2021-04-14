@@ -74,4 +74,9 @@ void EntityPlayer::PreThink(float delta)
 	{
 		physBody->velocity.x = 0;
 	}
+
+	if (IsKeyPressed(KEY_UP) && physBody->isGrounded)
+	{
+		physBody->velocity.y = -32;
+	}
 }
