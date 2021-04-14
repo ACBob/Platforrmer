@@ -8,9 +8,6 @@
 #include <vector>
 #include <algorithm>
 
-
-#define NULL 0
-
 // TODO: not this
 #define SPRITE_HEIGHT 16
 #define SPRITE_WIDTH 16
@@ -42,10 +39,11 @@ class SpriteBase
 class EntityBase
 {
 	public:
-		EntityBase(Vector2 position);
+		EntityBase();
 		~EntityBase()
 		{
 			physBody = nullptr;
+			isDead = true;
 		};
 
 		void Render();
@@ -66,11 +64,11 @@ class EntityBase
 		// Should test against this when accessing.
 		bool isDead;
 
-	protected:
-		SpriteBase sprite = NULL;
-
 		// Physics Body
 		b2Body *physBody;
+
+	protected:
+		SpriteBase sprite = NULL;
 };
 
 // Holds the list of entities, Box2D world, etc.
@@ -121,7 +119,10 @@ class EntityWorld
 		template <typename T>
 		T *NewEntity()
 		{
-			T ent = T( Vector2({0,0}) );
+			// Create it
+			T ent = T();
+
+			// Start tracking it
 			AddEntity(&ent);
 
 			return &ent;
@@ -136,7 +137,7 @@ class EntityWorld
 class EntityPlayer : public EntityBase
 {
 	public:
-		EntityPlayer(Vector2 position);
+		EntityPlayer();
 
 		void PreThink(float delta);
 };

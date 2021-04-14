@@ -19,7 +19,7 @@ void SpriteBase::Render(Vector2 A, Vector2 B, Vector2 C, Vector2 D)
 	DrawLineV(D, A, RED);
 }
 
-EntityBase::EntityBase(Vector2 position)
+EntityBase::EntityBase()
 {
 	physBody = NULL;
 
@@ -28,8 +28,8 @@ EntityBase::EntityBase(Vector2 position)
 
 Vector2 EntityBase::GetPosition()
 {
-	b2Vec2 pos = physBody->GetPosition();
-	return Vector2({pos.x, pos.y});
+	// b2Vec2 pos = physBody->GetPosition();
+	return Vector2({0, 0});
 }
 
 int EntityBase::GetRotation()
@@ -49,7 +49,7 @@ b2Body *EntityBase::GetPhysicsBody()
 }
 
 
-EntityPlayer::EntityPlayer(Vector2 position) : EntityBase(position)
+EntityPlayer::EntityPlayer() : EntityBase()
 {
 	// // Don't spin
 	// physBody->freezeOrient = true;
