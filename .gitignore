@@ -38,3 +38,6 @@
 ## Ignore these directories entirely
 build/
 bin/
+
+## Ignore these files generated on-run
+*.log
