@@ -7,7 +7,8 @@
 
 #include <vector>
 #include <algorithm>
-#include <cstdio>
+
+#include "loguru.hpp"
 
 // TODO: not this
 #define SPRITE_HEIGHT 16
@@ -100,7 +101,7 @@ class EntityWorld
 			entlist.push_back(enttoadd);
 
 			if (entlist.size() > MAXENTS) {
-				printf("Panic! Too many Entities!\n");
+				LOG_F(FATAL, "Panic! Too many Entities!\n");
 				// TODO: panic
 			}
 		};

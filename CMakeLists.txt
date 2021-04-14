@@ -27,6 +27,7 @@ set(includes
 	include
 	.
 	thirdparty/box2d/include
+	thirdparty
 )
 list(TRANSFORM includes PREPEND "src/")
 include_directories(${includes})
@@ -34,8 +35,12 @@ include_directories(${includes})
 set(sources
 	main.cpp
 	entities.cpp
+
+	# Loguru
+	thirdparty/loguru.cpp
+	thirdparty/loguru.hpp
 )
 list(TRANSFORM sources PREPEND "src/")
 
 add_executable(${PROJECT_NAME} ${sources})
-target_link_libraries(${PROJECT_NAME} raylib pthread box2d)
+target_link_libraries(${PROJECT_NAME} raylib pthread box2d dl)

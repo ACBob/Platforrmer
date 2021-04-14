@@ -4,16 +4,19 @@
 #include "entities.h"
 #include <vector>
 
+#include "loguru.hpp"
+
 #include "box2d/box2d.h"
 
 int main(void)
 {
+    loguru::add_file("console.log", loguru::Truncate, loguru::Verbosity_MAX);
+
     const int screenWidth = 800;
     const int screenHeight = 416; // 416 fits in a 16x16 grid
 
     SetConfigFlags(FLAG_MSAA_4X_HINT);
     InitWindow(screenWidth, screenHeight, "Platforrmer");
-    
 
     SetTargetFPS(60);
 
