@@ -15,6 +15,7 @@ find_package(glfw3 3.3 REQUIRED)
 # Includes
 set(includes
 	include
+	.
 )
 list(TRANSFORM includes PREPEND "src/")
 include_directories(${includes})
@@ -22,6 +23,8 @@ include_directories(${includes})
 set(sources
 	main.cpp
 	glad.c
+
+	render/platform/platform_glfw.cpp
 )
 list(TRANSFORM sources PREPEND "src/")
 
