@@ -27,9 +27,11 @@ include_directories(${includes})
 
 set(sources
 	main.cpp
+	entities.cpp
+
 	thirdparty/physac.h
 )
 list(TRANSFORM sources PREPEND "src/")
 
 add_executable(${PROJECT_NAME} ${sources})
-target_link_libraries(${PROJECT_NAME} raylib)
+target_link_libraries(${PROJECT_NAME} raylib pthread)

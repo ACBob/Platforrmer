@@ -1,41 +1,55 @@
+// Raylib
 #include "raylib.h"
+
+#include "entities.h"
+
+#define PHYSAC_IMPLEMENTATION
+#include "physac.h"
+
 
 int main(void)
 {
-    // Initialization
-    //--------------------------------------------------------------------------------------
     const int screenWidth = 800;
-    const int screenHeight = 450;
+    const int screenHeight = 416; // 416 fits in a 16x16 grid
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+    InitWindow(screenWidth, screenHeight, "Platforrmer");
 
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-    //--------------------------------------------------------------------------------------
+    SetTargetFPS(60);
+
+    // Camera
+    Camera2D Camera = Camera2D();
+
+    Camera.target = Vector2({0,0});
+    Camera.offset = Vector2({screenWidth/2, screenHeight/2});
+    Camera.zoom = 1.0f;
+
+    InitPhysics();
+
+    // Create the player
+    EntityPlayer player = EntityPlayer(Vector2({0,0}));
 
     // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
+    while (!WindowShouldClose())
     {
-        // Update
-        //----------------------------------------------------------------------------------
-        // TODO: Update your variables here
-        //----------------------------------------------------------------------------------
+        PhysicsStep();
 
-        // Draw
-        //----------------------------------------------------------------------------------
+        Camera.target = player.GetPosition();
+
         BeginDrawing();
+            ClearBackground(SKYBLUE);
 
-        ClearBackground(RAYWHITE);
+            BeginMode2D(Camera);
 
-        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+                player.Render();
+
+                DrawCircle(800/2, 416/2, 100, RED);
+
+            EndMode2D();
 
         EndDrawing();
-        //----------------------------------------------------------------------------------
     }
 
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
-    CloseWindow();        // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
+    CloseWindow();
 
     return 0;
 }
