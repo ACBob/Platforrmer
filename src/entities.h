@@ -7,10 +7,14 @@
 
 #include <vector>
 #include <algorithm>
+#include <cstdio>
 
 // TODO: not this
 #define SPRITE_HEIGHT 16
 #define SPRITE_WIDTH 16
+
+// Arbitrary
+#define MAXENTS 1024
 
 enum {
 	TL_NULL, // Invalid/Air
@@ -80,9 +84,12 @@ class EntityWorld
 			// Create the box2d world
 			b2World world(b2Vec2(hgrav, vgrav));
 			physicsworld = &world;
+
+			entlist.reserve(MAXENTS);
 		};
 		~EntityWorld()
 		{
+			// Delete the entities, then the list
 			for (auto ent : entlist)
 				delete ent;
 			entlist.clear();
@@ -91,6 +98,11 @@ class EntityWorld
 		void AddEntity(EntityBase *enttoadd)
 		{
 			entlist.push_back(enttoadd);
+
+			if (entlist.size() > MAXENTS) {
+				printf("Panic! Too many Entities!\n");
+				// TODO: panic
+			}
 		};
 
 		static bool ShouldRemove(EntityBase *ent)
@@ -101,6 +113,7 @@ class EntityWorld
 		void Update(float delta)
 		{
 			// First clear out dead entities
+			// TODO: this may not actually delete entities? Memory leak??!!
 			entlist.erase(
 				std::remove_if(
 					entlist.begin(),
