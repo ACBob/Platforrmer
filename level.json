@@ -3,27 +3,27 @@
 	"desc": "Testing level",
 	"blocks": [
 		{
-			"pos": [0,0],
+			"pos": [0.0,0.5],
 			"type": "TL_GRND",
 			"tex": "DEFAULT"
 		},
 		{
-			"pos": [1,0],
+			"pos": [1.0,0.5],
 			"type": "TL_GRND",
 			"tex": "DEFAULT"
 		},
 		{
-			"pos": [2,0],
+			"pos": [2.0,0.5],
 			"type": "TL_GRND",
 			"tex": "DEFAULT"
 		},
 		{
-			"pos": [3,0],
+			"pos": [3.0,0.5],
 			"type": "TL_GRND",
 			"tex": "DEFAULT"
 		},
 		{
-			"pos": [4,0],
+			"pos": [4.0,0.5],
 			"type": "TL_GRND",
 			"tex": "DEFAULT"
 		}
