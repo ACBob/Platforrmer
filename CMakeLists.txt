@@ -36,6 +36,7 @@ set(sources
 	main.cpp
 	entities.cpp
 	b2debugdraw.cpp
+	levelload.cpp
 
 	# Loguru
 	thirdparty/loguru.cpp

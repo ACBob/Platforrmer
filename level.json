@@ -1,0 +1,31 @@
+{
+	"name": "TEST_LEVEL",
+	"desc": "Testing level",
+	"blocks": [
+		{
+			"pos": [0,0],
+			"type": "TL_GRND",
+			"tex": "DEFAULT"
+		},
+		{
+			"pos": [1,0],
+			"type": "TL_GRND",
+			"tex": "DEFAULT"
+		},
+		{
+			"pos": [2,0],
+			"type": "TL_GRND",
+			"tex": "DEFAULT"
+		},
+		{
+			"pos": [3,0],
+			"type": "TL_GRND",
+			"tex": "DEFAULT"
+		},
+		{
+			"pos": [4,0],
+			"type": "TL_GRND",
+			"tex": "DEFAULT"
+		}
+	]
+}

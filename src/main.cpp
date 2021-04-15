@@ -4,6 +4,8 @@
 #include "entities.h"
 #include <vector>
 
+#include "levelload.h"
+
 #include "loguru.hpp"
 
 #include "box2d/box2d.h"
@@ -27,12 +29,14 @@ int main(void)
     Camera.offset = Vector2({screenWidth/2, screenHeight/2});
     Camera.zoom = 2.0f;
 
-    World daWorld;
+    LOG_F(INFO, "Attempt to load level file");
+    
+    EntityLevel world = loadLevel("level.json");
+    World *entWorld = world.GetWorld();
 
-    EntityPlayer *player = daWorld.NewEntity<EntityPlayer>();
-    assert(player != nullptr);
+    EntityPlayer *player = entWorld->NewEntity<EntityPlayer>();
 
-    EntityTile *groundTest = daWorld.NewEntity<EntityTile>();
+    EntityTile *groundTest = entWorld->NewEntity<EntityTile>();
 
     groundTest->GetPhysicsBody()->SetTransform(b2Vec2(-13, 32), 0);
     
@@ -40,9 +44,9 @@ int main(void)
     while (!WindowShouldClose())
     {
         float delta = GetFrameTime();
-        daWorld.FrameStart(delta);
+        entWorld->FrameStart(delta);
 
-        daWorld.Update(delta);
+        entWorld->Update(delta);
         Camera.target = player->GetPosition();
 
         BeginDrawing();
@@ -50,7 +54,7 @@ int main(void)
 
             BeginMode2D(Camera);
 
-                daWorld.Render(true);
+                entWorld->Render(true);
 
                 DrawCircle(800/2, 416/2, 100, RED);
                 DrawRectangle(-50,112,100,32,RED);
@@ -59,7 +63,7 @@ int main(void)
 
         EndDrawing();
         
-        daWorld.FrameEnd(delta);
+        entWorld->FrameEnd(delta);
     }
 
     CloseWindow();

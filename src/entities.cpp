@@ -50,10 +50,30 @@ Vector2 EntityBase::GetPosition()
 	b2Vec2 pos = physBody->GetPosition();
 	return Vector2({pos.x, pos.y});
 }
+b2Vec2 EntityBase::GetVecPosition()
+{
+	return physBody->GetPosition();
+}
 
 float EntityBase::GetRotation()
 {
 	return physBody->GetAngle();
+}
+
+void EntityBase::SetPosition(b2Vec2 position)
+{
+	physBody->SetTransform(
+		position,
+		GetRotation()
+	);
+}
+
+void EntityBase::SetRotation(float orient)
+{
+	physBody->SetTransform(
+		GetVecPosition(),
+		orient
+	);
 }
 
 void EntityBase::Render()

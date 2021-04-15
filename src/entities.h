@@ -52,8 +52,16 @@ class EntityBase
 
 		void Render();
 
+		// Returns position as a RAYLIB Vector2
 		Vector2 GetPosition();
+		// Returns position as a B2D b2Vec2
+		b2Vec2 GetVecPosition();
 		float GetRotation();
+
+		// Sets the physBody's position to the b2Vec2
+		void SetPosition(b2Vec2 pos);
+		// Sets the rotation to orient radians
+		void SetRotation(float orient);
 
 		b2Body *GetPhysicsBody();
 		virtual void CreateBody(b2World *world);
@@ -185,6 +193,11 @@ class World
 			return physicsworld;
 		}
 
+		std::vector<EntityBase*>* GetEntityVector()
+		{
+			return &entlist;
+		}
+
 	protected:
 		std::vector<EntityBase*> entlist;
 		b2World *physicsworld;
@@ -210,6 +223,15 @@ class EntityTile : public EntityBase
 		~EntityTile() {};
 
 		void CreateBody(b2World *world);
+
+		void SetType(TileType typeToUse)
+		{
+			type = typeToUse;
+		}
+		TileType GetType()
+		{
+			return type;
+		}
 
 	protected:
 		TileType type;
