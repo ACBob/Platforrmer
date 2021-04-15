@@ -53,7 +53,7 @@ class EntityBase
 		void Render();
 
 		Vector2 GetPosition();
-		int GetRotation();
+		float GetRotation();
 
 		b2Body *GetPhysicsBody();
 		virtual void CreateBody(b2World *world);

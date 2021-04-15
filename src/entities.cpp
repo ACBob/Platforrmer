@@ -4,6 +4,7 @@
 #include "entities.h"
 
 #include <cstdio>
+#include <math.h>
 
 SpriteBase::SpriteBase(const char* texturefp)
 {
@@ -12,6 +13,12 @@ SpriteBase::SpriteBase(const char* texturefp)
 }
 
 void SpriteBase::Render(Vector2 position, float orient) {
+
+	position.x = position.x - (texture.width / 2);
+	position.y = position.y - (texture.height / 2);
+
+	orient = orient * RAD2DEG;
+
 	DrawTextureEx(texture, position, orient, 1, WHITE);
 }
 
@@ -44,7 +51,7 @@ Vector2 EntityBase::GetPosition()
 	return Vector2({pos.x, pos.y});
 }
 
-int EntityBase::GetRotation()
+float EntityBase::GetRotation()
 {
 	return physBody->GetAngle();
 }
@@ -78,15 +85,25 @@ void EntityPlayer::PreThink(float delta)
 			)
 		);
 	}
-	// else if (IsKeyPressed(KEY_LEFT))
-	// {
-	// 	physBody->velocity.x = -1;
-	// }
+	else if (IsKeyPressed(KEY_LEFT))
+	{
+		physBody->SetLinearVelocity(
+			b2Vec2(
+				-32.0f,
+				physBody->GetLinearVelocity().y
+			)
+		);
+	}
 
-	// if (IsKeyReleased(KEY_RIGHT) || IsKeyReleased(KEY_LEFT))
-	// {
-	// 	physBody->velocity.x = 0;
-	// }
+	if (IsKeyReleased(KEY_RIGHT) || IsKeyReleased(KEY_LEFT))
+	{
+		physBody->SetLinearVelocity(
+			b2Vec2(
+				0,
+				physBody->GetLinearVelocity().y
+			)
+		);
+	}
 
 	// if (IsKeyPressed(KEY_UP) && physBody->isGrounded)
 	// {
