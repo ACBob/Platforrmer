@@ -17,11 +17,11 @@
 // Arbitrary
 #define MAXENTS 1024
 
-enum {
+enum TileType{
 	TL_NULL, // Invalid/Air
 	TL_GRND, // Regular Ground
 	TL_ICE, // Slippy
-} TileType;
+};
 
 
 
@@ -54,6 +54,7 @@ class EntityBase
 		int GetRotation();
 
 		b2Body *GetPhysicsBody();
+		virtual void CreateBody(b2World *world);
 
 		// Called at the start of a frame
 		virtual void PreThink(float delta) = 0;
@@ -161,6 +162,8 @@ class World
 		{
 			// Create it
 			static T ent = T(physicsworld);
+			// Make it get a body
+			ent.CreateBody(physicsworld);
 		
 			// Start tracking it
 			return (T*)AddEntity(&ent);
@@ -177,6 +180,7 @@ class World
 
 };
 
+// The player
 class EntityPlayer : public EntityBase
 {
 	public:
@@ -186,4 +190,21 @@ class EntityPlayer : public EntityBase
 
 		void Think(float delta) {};
 		void PostThink(float delta) {};
+};
+
+// A tile in the world
+class EntityTile : public EntityBase
+{
+	public:
+		EntityTile(b2World *world) : EntityBase(world) {};
+		~EntityTile() {};
+
+		void CreateBody(b2World *world) override;
+
+		void PreThink(float delta) {};
+		void Think(float delta) {};
+		void PostThink(float delta) {};
+
+	protected:
+		TileType type;
 };

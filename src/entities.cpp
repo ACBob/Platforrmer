@@ -19,7 +19,11 @@ void SpriteBase::Render(Vector2 position, float orient) {
 EntityBase::EntityBase(b2World *world)
 {
 	physBody = NULL;
+	sprite = SpriteBase("test.png");
+}
 
+void EntityBase::CreateBody(b2World *world)
+{
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(0.0f, 0.0);
@@ -32,8 +36,6 @@ EntityBase::EntityBase(b2World *world)
 	fixtureDef.shape = &shape;
 	fixtureDef.density = 1;
 	physBody->CreateFixture(&fixtureDef);
-
-	sprite = SpriteBase("test.png");
 }
 
 Vector2 EntityBase::GetPosition()
@@ -45,8 +47,7 @@ Vector2 EntityBase::GetPosition()
 
 int EntityBase::GetRotation()
 {
-	// return physBody->orient;
-	return 0;
+	return physBody->GetAngle();
 }
 
 void EntityBase::Render()
@@ -68,7 +69,6 @@ EntityPlayer::EntityPlayer(b2World *world) : EntityBase(world)
 
 void EntityPlayer::PreThink(float delta)
 {
-	LOG_F(INFO, "poo");
 	// Handle input
 	if (IsKeyPressed(KEY_RIGHT))
 	{
@@ -93,4 +93,20 @@ void EntityPlayer::PreThink(float delta)
 	// {
 	// 	physBody->velocity.y = -32;
 	// }
+}
+
+void EntityTile::CreateBody(b2World *world)
+{
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_staticBody;
+	bodyDef.position.Set(0.0f, 0.0);
+	physBody = world->CreateBody(&bodyDef);
+
+	b2PolygonShape shape;
+	shape.SetAsBox(1,1);
+
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &shape;
+	fixtureDef.density = 1;
+	physBody->CreateFixture(&fixtureDef);
 }

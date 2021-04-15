@@ -31,6 +31,10 @@ int main(void)
 
     EntityPlayer *player = daWorld.NewEntity<EntityPlayer>();
     assert(player != nullptr);
+
+    EntityTile *groundTest = daWorld.NewEntity<EntityTile>();
+
+    groundTest->GetPhysicsBody()->SetTransform(b2Vec2(0, 32), 0);
     
     // Main game loop
     while (!WindowShouldClose())
