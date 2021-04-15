@@ -35,10 +35,6 @@ int main(void)
     World *entWorld = world.GetWorld();
 
     EntityPlayer *player = entWorld->NewEntity<EntityPlayer>();
-
-    EntityTile *groundTest = entWorld->NewEntity<EntityTile>();
-
-    groundTest->GetPhysicsBody()->SetTransform(b2Vec2(-13, 32), 0);
     
     // Main game loop
     while (!WindowShouldClose())
@@ -55,9 +51,6 @@ int main(void)
             BeginMode2D(Camera);
 
                 entWorld->Render(true);
-
-                DrawCircle(800/2, 416/2, 100, RED);
-                DrawRectangle(-50,112,100,32,RED);
 
             EndMode2D();
 

@@ -107,8 +107,8 @@ void EntityPlayer::CreateBody(b2World *world)
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &shape;
-	fixtureDef.density = 5;
-	fixtureDef.restitution = 1;
+	fixtureDef.density = 1;
+	fixtureDef.restitution = 0;
 	physBody->CreateFixture(&fixtureDef);
 }
 
