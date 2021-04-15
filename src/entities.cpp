@@ -38,8 +38,9 @@ EntityBase::EntityBase(b2World *world)
 
 Vector2 EntityBase::GetPosition()
 {
-	// b2Vec2 pos = physBody->GetPosition();
-	return Vector2({0, 0});
+	// assert(physBody);
+	b2Vec2 pos = physBody->GetPosition();
+	return Vector2({pos.x, pos.y});
 }
 
 int EntityBase::GetRotation()

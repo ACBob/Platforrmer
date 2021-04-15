@@ -44,7 +44,7 @@ class EntityBase
 		EntityBase(b2World *world);
 		~EntityBase()
 		{
-			physBody = nullptr;
+			// delete physBody;
 			isDead = true;
 		};
 
@@ -64,7 +64,7 @@ class EntityBase
 
 		// Set to true to remove.
 		// Should test against this when accessing.
-		bool isDead;
+		bool isDead = false;
 
 		// Physics Body
 		b2Body *physBody;
@@ -83,7 +83,7 @@ class EntityWorld
 			// Create the box2d world
 			physicsworld = new b2World(b2Vec2(hgrav, vgrav));
 
-			// entlist.reserve(MAXENTS);
+			entlist.reserve(MAXENTS);
 		};
 		~EntityWorld()
 		{
@@ -106,6 +106,7 @@ class EntityWorld
 
 		void Update(float delta)
 		{
+			assert(physicsworld != nullptr);
 			// First clear out dead entities
 			// TODO: this may not actually delete entities? Memory leak??!!
 			entlist.erase(
@@ -117,9 +118,9 @@ class EntityWorld
 				entlist.end()
 			);
 
-			for (auto ent : entlist)
+			for (std::vector<EntityBase>::iterator i = entlist.begin(); i != entlist.end(); ++i)
 			{
-				ent.Think(delta);
+				i->Think(delta);
 			}
 
 			// Do physics
@@ -137,7 +138,7 @@ class EntityWorld
 		};
 
 		// Creates, Adds, and returns a new Entity of type
-		template <typename T>
+		template <class T>
 		T *NewEntity()
 		{
 			// Create it
@@ -148,6 +149,11 @@ class EntityWorld
 
 			return &ent;
 		};
+
+		b2World *GetPhysWorld()
+		{
+			return physicsworld;
+		}
 
 	protected:
 		std::vector<EntityBase> entlist;
