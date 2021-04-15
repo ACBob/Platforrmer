@@ -56,11 +56,11 @@ class EntityBase
 		b2Body *GetPhysicsBody();
 
 		// Called at the start of a frame
-		virtual void PreThink(float delta) {};
+		virtual void PreThink(float delta) = 0;
 		// Called after physics, but before rendering
-		virtual void Think(float delta) {};
+		virtual void Think(float delta) = 0;
 		// Called at the end of a frame
-		virtual void PostThink(float delta) {};
+		virtual void PostThink(float delta) = 0;
 
 		// Set to true to remove.
 		// Should test against this when accessing.
@@ -82,15 +82,13 @@ class World
 		{
 			// Create the box2d world
 			physicsworld = new b2World(b2Vec2(hgrav, vgrav));
-
-			entlist.reserve(MAXENTS);
 		};
 		~World()
 		{
 			entlist.clear();
 		};
 
-		EntityBase *AddEntity(EntityBase enttoadd)
+		EntityBase *AddEntity(EntityBase *enttoadd)
 		{
 			entlist.push_back(enttoadd);
 
@@ -98,12 +96,12 @@ class World
 				LOG_F(FATAL, "Panic! Too many Entities!\n");
 			}
 
-			return &entlist.back();
+			return entlist.back();
 		};
 
-		static bool ShouldRemove(EntityBase ent)
+		static bool ShouldRemove(EntityBase *ent)
 		{
-			return ent.isDead;
+			return ent->isDead;
 		};
 
 		void Update(float delta)
@@ -120,9 +118,9 @@ class World
 				entlist.end()
 			);
 
-			for (std::vector<EntityBase>::iterator i = entlist.begin(); i != entlist.end(); ++i)
+			for (auto ent : entlist)
 			{
-				i->Think(delta);
+				ent->Think(delta);
 			}
 
 			// Do physics
@@ -131,11 +129,29 @@ class World
 
 		};
 
+		// Pre think
+		void FrameStart(float delta)
+		{
+			for (auto ent : entlist)
+			{
+				ent->PreThink(delta);
+			}
+		}
+
+		// Post Think
+		void FrameEnd(float delta)
+		{
+			for (auto ent : entlist)
+			{
+				ent->PostThink(delta);
+			}
+		}
+
 		void Render()
 		{
 			for (auto ent : entlist)
 			{
-				ent.Render();
+				ent->Render();
 			}
 		};
 
@@ -144,10 +160,10 @@ class World
 		T *NewEntity()
 		{
 			// Create it
-			T ent = T(physicsworld);
+			static T ent = T(physicsworld);
 		
 			// Start tracking it
-			return (T*)AddEntity(ent);
+			return (T*)AddEntity(&ent);
 		};
 
 		b2World *GetPhysWorld()
@@ -156,7 +172,7 @@ class World
 		}
 
 	protected:
-		std::vector<EntityBase> entlist;
+		std::vector<EntityBase*> entlist;
 		b2World *physicsworld;
 
 };
@@ -167,4 +183,7 @@ class EntityPlayer : public EntityBase
 		EntityPlayer(b2World *world);
 
 		void PreThink(float delta);
+
+		void Think(float delta) {};
+		void PostThink(float delta) {};
 };

@@ -36,6 +36,7 @@ int main(void)
     while (!WindowShouldClose())
     {
         float delta = GetFrameTime();
+        daWorld.FrameStart(delta);
 
         daWorld.Update(delta);
         Camera.target = player->GetPosition();
@@ -53,6 +54,8 @@ int main(void)
             EndMode2D();
 
         EndDrawing();
+        
+        daWorld.FrameEnd(delta);
     }
 
     CloseWindow();

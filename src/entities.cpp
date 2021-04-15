@@ -68,11 +68,17 @@ EntityPlayer::EntityPlayer(b2World *world) : EntityBase(world)
 
 void EntityPlayer::PreThink(float delta)
 {
-	// // Handle input
-	// if (IsKeyPressed(KEY_RIGHT))
-	// {
-	// 	physBody->velocity.x = 1;
-	// }
+	LOG_F(INFO, "poo");
+	// Handle input
+	if (IsKeyPressed(KEY_RIGHT))
+	{
+		physBody->SetLinearVelocity(
+			b2Vec2(
+				32.0f,
+				physBody->GetLinearVelocity().y
+			)
+		);
+	}
 	// else if (IsKeyPressed(KEY_LEFT))
 	// {
 	// 	physBody->velocity.x = -1;
