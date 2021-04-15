@@ -13,7 +13,6 @@ SpriteBase::SpriteBase(const char* texturefp)
 
 void SpriteBase::Render(Vector2 position, float orient) {
 	DrawTextureEx(texture, position, orient, 1, WHITE);
-	DrawCircle(position.x, position.y, 10, RED);
 }
 
 EntityBase::EntityBase(b2World *world)
@@ -30,7 +29,7 @@ void EntityBase::CreateBody(b2World *world)
 	physBody = world->CreateBody(&bodyDef);
 
 	b2PolygonShape shape;
-	shape.SetAsBox(1,1);
+	shape.SetAsBox(8,8);
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &shape;
@@ -103,7 +102,7 @@ void EntityTile::CreateBody(b2World *world)
 	physBody = world->CreateBody(&bodyDef);
 
 	b2PolygonShape shape;
-	shape.SetAsBox(1,1);
+	shape.SetAsBox(8,8);
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &shape;

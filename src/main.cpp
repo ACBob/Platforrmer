@@ -34,7 +34,7 @@ int main(void)
 
     EntityTile *groundTest = daWorld.NewEntity<EntityTile>();
 
-    groundTest->GetPhysicsBody()->SetTransform(b2Vec2(0, 32), 0);
+    groundTest->GetPhysicsBody()->SetTransform(b2Vec2(-13, 32), 0);
     
     // Main game loop
     while (!WindowShouldClose())
