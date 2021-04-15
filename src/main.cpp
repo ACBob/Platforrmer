@@ -25,7 +25,7 @@ int main(void)
 
     Camera.target = Vector2({0,0});
     Camera.offset = Vector2({screenWidth/2, screenHeight/2});
-    Camera.zoom = 1.5f;
+    Camera.zoom = 2.0f;
 
     World daWorld;
 

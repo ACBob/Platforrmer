@@ -69,8 +69,27 @@ b2Body *EntityBase::GetPhysicsBody()
 
 EntityPlayer::EntityPlayer(b2World *world) : EntityBase(world)
 {
-	// // Don't spin
-	// physBody->freezeOrient = true;
+	// Don't spin
+	// physBody->SetFixedRotation(true);
+}
+
+void EntityPlayer::CreateBody(b2World *world)
+{
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody; // TODO: Would kinematic be better?
+	bodyDef.position.Set(0.0f, 0.0);
+	// Don't spin
+	bodyDef.fixedRotation = true;
+	physBody = world->CreateBody(&bodyDef);
+
+	b2PolygonShape shape;
+	shape.SetAsBox(8,8);
+
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &shape;
+	fixtureDef.density = 5;
+	fixtureDef.restitution = 1;
+	physBody->CreateFixture(&fixtureDef);
 }
 
 void EntityPlayer::PreThink(float delta)

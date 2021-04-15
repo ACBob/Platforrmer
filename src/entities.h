@@ -59,11 +59,11 @@ class EntityBase
 		virtual void CreateBody(b2World *world);
 
 		// Called at the start of a frame
-		virtual void PreThink(float delta) = 0;
+		virtual void PreThink(float delta) {};
 		// Called after physics, but before rendering
-		virtual void Think(float delta) = 0;
+		virtual void Think(float delta) {};
 		// Called at the end of a frame
-		virtual void PostThink(float delta) = 0;
+		virtual void PostThink(float delta) {};
 
 		// Set to true to remove.
 		// Should test against this when accessing.
@@ -197,11 +197,9 @@ class EntityPlayer : public EntityBase
 {
 	public:
 		EntityPlayer(b2World *world);
+		void CreateBody(b2World *world);
 
 		void PreThink(float delta);
-
-		void Think(float delta) {};
-		void PostThink(float delta) {};
 };
 
 // A tile in the world
@@ -211,11 +209,7 @@ class EntityTile : public EntityBase
 		EntityTile(b2World *world) : EntityBase(world) {};
 		~EntityTile() {};
 
-		void CreateBody(b2World *world) override;
-
-		void PreThink(float delta) {};
-		void Think(float delta) {};
-		void PostThink(float delta) {};
+		void CreateBody(b2World *world);
 
 	protected:
 		TileType type;
