@@ -75,17 +75,17 @@ class EntityBase
 
 // Holds the list of entities, Box2D world, etc.
 // Pretty much just an entity system
-class EntityWorld
+class World
 {
 	public: 
-		EntityWorld(float hgrav=0.0f, float vgrav=9.8f)
+		World(float hgrav=0.0f, float vgrav=9.8f)
 		{
 			// Create the box2d world
 			physicsworld = new b2World(b2Vec2(hgrav, vgrav));
 
 			entlist.reserve(MAXENTS);
 		};
-		~EntityWorld()
+		~World()
 		{
 			entlist.clear();
 		};

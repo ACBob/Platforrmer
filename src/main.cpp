@@ -27,7 +27,7 @@ int main(void)
     Camera.offset = Vector2({screenWidth/2, screenHeight/2});
     Camera.zoom = 1.5f;
 
-    EntityWorld daWorld;
+    World daWorld;
 
     EntityPlayer *player = daWorld.NewEntity<EntityPlayer>();
     assert(player != nullptr);
