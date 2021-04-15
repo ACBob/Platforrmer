@@ -78,7 +78,7 @@ class EntityBase
 class EntityWorld
 {
 	public: 
-		EntityWorld(float hgrav=0.0f, float vgrav=-9.8f)
+		EntityWorld(float hgrav=0.0f, float vgrav=9.8f)
 		{
 			// Create the box2d world
 			physicsworld = new b2World(b2Vec2(hgrav, vgrav));
@@ -90,13 +90,15 @@ class EntityWorld
 			entlist.clear();
 		};
 
-		void AddEntity(EntityBase enttoadd)
+		EntityBase *AddEntity(EntityBase enttoadd)
 		{
 			entlist.push_back(enttoadd);
 
 			if (entlist.size() > MAXENTS) {
 				LOG_F(FATAL, "Panic! Too many Entities!\n");
 			}
+
+			return &entlist.back();
 		};
 
 		static bool ShouldRemove(EntityBase ent)
@@ -145,9 +147,7 @@ class EntityWorld
 			T ent = T(physicsworld);
 		
 			// Start tracking it
-			AddEntity(ent);
-
-			return &ent;
+			return (T*)AddEntity(ent);
 		};
 
 		b2World *GetPhysWorld()

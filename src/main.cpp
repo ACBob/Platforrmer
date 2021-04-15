@@ -25,11 +25,12 @@ int main(void)
 
     Camera.target = Vector2({0,0});
     Camera.offset = Vector2({screenWidth/2, screenHeight/2});
-    Camera.zoom = 1.0f;
+    Camera.zoom = 1.5f;
 
     EntityWorld daWorld;
 
-    EntityPlayer player = EntityPlayer(daWorld.GetPhysWorld());
+    EntityPlayer *player = daWorld.NewEntity<EntityPlayer>();
+    assert(player != nullptr);
     
     // Main game loop
     while (!WindowShouldClose())
@@ -37,7 +38,7 @@ int main(void)
         float delta = GetFrameTime();
 
         daWorld.Update(delta);
-        Camera.target = player.GetPosition();
+        Camera.target = player->GetPosition();
 
         BeginDrawing();
             ClearBackground(SKYBLUE);
