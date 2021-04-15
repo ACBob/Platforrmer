@@ -15,7 +15,7 @@ int main(void)
     const int screenWidth = 800;
     const int screenHeight = 416; // 416 fits in a 16x16 grid
 
-    SetConfigFlags(FLAG_MSAA_4X_HINT);
+    // SetConfigFlags(FLAG_MSAA_4X_HINT);
     InitWindow(screenWidth, screenHeight, "Platforrmer");
 
     SetTargetFPS(60);
@@ -50,7 +50,7 @@ int main(void)
 
             BeginMode2D(Camera);
 
-                daWorld.Render();
+                daWorld.Render(true);
 
                 DrawCircle(800/2, 416/2, 100, RED);
                 DrawRectangle(-50,112,100,32,RED);

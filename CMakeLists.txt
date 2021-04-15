@@ -35,6 +35,7 @@ include_directories(${includes})
 set(sources
 	main.cpp
 	entities.cpp
+	b2debugdraw.cpp
 
 	# Loguru
 	thirdparty/loguru.cpp

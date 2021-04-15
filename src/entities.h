@@ -5,6 +5,8 @@
 #include "raylib.h"
 #include "box2d/box2d.h"
 
+#include "b2debugdraw.h"
+
 #include <vector>
 #include <algorithm>
 
@@ -83,6 +85,12 @@ class World
 		{
 			// Create the box2d world
 			physicsworld = new b2World(b2Vec2(hgrav, vgrav));
+			physicsworld->SetDebugDraw(&debugDraw);
+			
+			// Draw everything!
+			debugDraw.SetFlags(
+				b2Draw::e_shapeBit | b2Draw::e_aabbBit | b2Draw::e_centerOfMassBit | b2Draw::e_jointBit | b2Draw::e_pairBit
+			);
 		};
 		~World()
 		{
@@ -148,12 +156,15 @@ class World
 			}
 		}
 
-		void Render()
+		void Render(bool debug = false)
 		{
 			for (auto ent : entlist)
 			{
 				ent->Render();
 			}
+
+			if (debug)
+				physicsworld->DebugDraw();
 		};
 
 		// Creates, Adds, and returns a new Entity of type
@@ -177,6 +188,7 @@ class World
 	protected:
 		std::vector<EntityBase*> entlist;
 		b2World *physicsworld;
+		RaylibB2Debug debugDraw;
 
 };
 
