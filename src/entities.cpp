@@ -10,8 +10,8 @@
 
 SpriteBase::SpriteBase(const char* texturefp)
 {
-	// TODO: Material system
 	texture = material::loadTexture(texturefp);
+	shader = material::getShader(texturefp);
 }
 
 void SpriteBase::Render(Vector2 position, float orient) {
@@ -21,7 +21,14 @@ void SpriteBase::Render(Vector2 position, float orient) {
 
 	orient = orient * RAD2DEG;
 
-	DrawTextureEx(texture, position, orient, 1, WHITE);
+	BeginShaderMode(shader);
+		DrawTextureRec(
+			texture,
+			Rectangle({0,0,texture.width,16}),
+			position,
+			WHITE
+		);
+	EndShaderMode();
 }
 
 EntityBase::EntityBase(b2World *world)

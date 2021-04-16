@@ -1,0 +1,12 @@
+[
+	{
+		"name": "world",
+		"FS": "world.fs",
+		"VS": "world.vs"
+	},
+	{
+		"name": "seizure",
+		"FS": "world.fs",
+		"VS": "world.vs"
+	}
+]

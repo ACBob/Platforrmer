@@ -27,5 +27,17 @@
 			"type": "TL_GRND",
 			"tex": "DEFAULT"
 		}
+	],
+	"entities": [
+		{
+			"entname": "phys_ball",
+			"pos": [2,-3],
+			"bounciness": 1
+		},
+		{
+			"entname": "phys_ball",
+			"pos": [4,-3],
+			"bounciness": 0.2
+		}
 	]
 }

@@ -1,3 +1,4 @@
 {
-	"screenSize": [800, 416]
+	"screenSize": [800, 416],
+	"enableDebug": true
 }

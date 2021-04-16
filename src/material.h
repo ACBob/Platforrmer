@@ -11,7 +11,15 @@
 
 namespace material
 {
+	// Initialise the system
+	bool init();
+	// ONLY TO BE CALLED BY INIT()
+	bool initShaders();
+
 	// Load texture at fp, relative to the materials/ folder.
 	// giveError will choose if it returns the error texture or not.
 	Texture loadTexture(const char *fp, bool giveError = true);
+
+	// Returns the shader defined for fp
+	Shader getShader(const char *fp);
 }

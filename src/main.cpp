@@ -4,6 +4,7 @@
 #include "entities.h"
 #include "levelload.h"
 #include "config.h"
+#include "material.h"
 
 #include "loguru.hpp"
 
@@ -29,16 +30,30 @@ int main(int argc, char* argv[])
         LOG_F(FATAL, "Could not change to resources directory! (%s)", respath);
     }
 
-    loguru::add_file("console.log", loguru::Truncate, loguru::Verbosity_MAX);
-
     LOG_F(INFO, "Loading config...");
     configStruct config = loadConfig("config.json");
+
+    loguru::Verbosity VERB = loguru::Verbosity_WARNING;
+
+    if (config.debugMode)
+    {
+        LOG_F(INFO, "Started in debug mode!");
+        VERB = loguru::Verbosity_MAX;
+    }
+
+    loguru::add_file("console.log", loguru::Truncate, VERB);
 
     // SetConfigFlags(FLAG_MSAA_4X_HINT);
     // SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(config.screenW, config.screenH, "Platforrmer");
-
     SetTargetFPS(60);
+    BeginDrawing();
+        ClearBackground(BLACK);
+        DrawText("Loading....", config.screenW/2, config.screenH/2, 24, RED);
+    EndDrawing();
+
+    // Init material system
+    material::init();
 
     // Camera
     Camera2D Camera = Camera2D();
@@ -68,7 +83,7 @@ int main(int argc, char* argv[])
 
             BeginMode2D(Camera);
 
-                entWorld->Render(true);
+                entWorld->Render(config.debugMode);
 
             EndMode2D();
 
