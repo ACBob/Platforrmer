@@ -35,7 +35,7 @@ std::vector<EntityTile*>* EntityLevel::GetTiles()
 	return &tiles;
 }
 
-EntityLevel loadLevel(const char *fp)
+EntityLevel loadLevel(str fp)
 {
 	EntityLevel level;
 
@@ -47,7 +47,7 @@ EntityLevel loadLevel(const char *fp)
 	for (json blockdef : j["blocks"])
 	{
 		b2Vec2 position;
-		const char* texture;
+		str texture;
 		TileType typeOfTile;
 
 		// Tiles are defined as such:

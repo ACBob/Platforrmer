@@ -10,7 +10,7 @@
 
 #include "include.h" // SHOULD BE IN EVERY FILE!
 
-SpriteBase::SpriteBase(const char* texturefp)
+SpriteBase::SpriteBase(str texturefp)
 {
 	mat = material::loadMaterial(texturefp);
 }

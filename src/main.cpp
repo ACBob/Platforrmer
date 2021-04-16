@@ -19,17 +19,17 @@ int main(int argc, char* argv[])
     LOG_F(INFO, "Started as %s", argv[0]);
 
     // now find the bin directory by assuming that the executable is it...
-    const char *binpath = GetDirectoryPath(argv[0]); // Raylib wins again!
-    binpath += 2; //! HACKHACKHACK: Remove the ./ from the path
-    LOG_F(INFO, "Assuming bin to be %s", binpath);
-    const char *respath = GetPrevDirectoryPath(binpath);
-    LOG_F(INFO, "Resources are PROBABLY at %s", respath);
+    str binpath = GetDirectoryPath(argv[0]); // Raylib wins again!
+    binpath = binpath.substr(2, binpath.back()); //! HACKHACKHACK: REMOVE ./ FROM START OF PATH
+    LOG_F(INFO, "Assuming bin to be %s", binpath.c_str());
+    str respath = GetPrevDirectoryPath(binpath.c_str());
+    LOG_F(INFO, "Resources are PROBABLY at %s", respath.c_str());
 
 
     // Try swapping to the respath
-    if (!ChangeDirectory(respath))
+    if (!ChangeDirectory(respath.c_str()))
     {
-        LOG_F(FATAL, "Could not change to resources directory! (%s)", respath);
+        LOG_F(FATAL, "Could not change to resources directory! (%s)", respath.c_str());
     }
 
     LOG_F(INFO, "Loading config...");

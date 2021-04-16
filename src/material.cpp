@@ -17,9 +17,9 @@ namespace material
 	material::BobMaterial matMissing;
 
 	// filepaths -> Material
-	std::map<const char*, BobMaterial> mats;
+	std::map<str, BobMaterial> mats;
 	// string shadername -> shader
-	std::map<std::string, Shader> shaders;
+	std::map<str, Shader> shaders;
 	
 	bool init()
 	{
@@ -55,19 +55,19 @@ namespace material
 
 		for (json shaderdef : j)
 		{
-			std::string name; // Name of the shader
+			str name; // Name of the shader
+			// NOTE: The following are only ever given to raylib, so we don't need them to be c++ strings
 			const char *fs; // frag shader
 			const char* vs; // vert shader
 
 			Shader shader; // raylib shader object
 
-			// Call me a boomer but we use c strings, not std::string
-			// So we need to get the std::string of the FragShader, and then the c_str() of it!
-			fs = shaderdef["FS"].get<std::string>().c_str();
-			vs = shaderdef["VS"].get<std::string>().c_str(); // Same for the vertex shader
+			// we need to get the str of the FragShader, and then the c_str() of it,
+			// So raylib (a C library) knows what we're doing
+			fs = shaderdef["FS"].get<str>().c_str();
+			vs = shaderdef["VS"].get<str>().c_str(); // Same for the VertShader
 
-			// AND The name!
-			name = shaderdef["name"].get<std::string>();
+			name = shaderdef["name"].get<str>();
 
 			// Allow forcing use of raylib internal vertex shader
 			if (char(vs[0]) == '0')
@@ -92,7 +92,7 @@ namespace material
 
 	// Load texture at fp, relative to the materials/ folder.
 	// giveError will choose if it returns the error texture or not.
-	BobMaterial loadMaterial(const char *fp, bool giveError)
+	BobMaterial loadMaterial(str fp, bool giveError)
 	{
 		ChangeDirectory("materials");
 		// if (mats.find(fp) != mats.end())
@@ -112,17 +112,17 @@ namespace material
 			std::cout << t.first << " " << t.second.id << std::endl;
 
 		fp = "missing.json";
-		LOG_F(INFO, "Loading material %s", fp);
+		LOG_F(INFO, "Loading material %s", fp.c_str());
 
 		std::ifstream file(fp);
 		json j;
 		file >> j;
 
-		const char *texpath; // "image":
-		std::string shadername; // "shader":
+		str texpath; // "image":
+		str shadername; // "shader":
 
-		texpath = j["image"].get<std::string>().c_str();
-		shadername = j["shader"].get<std::string>();
+		texpath = j["image"].get<str>();
+		shadername = j["shader"].get<str>();
 
 		if (shaders.find(shadername) == shaders.end())
 		{
@@ -130,10 +130,10 @@ namespace material
 			return matMissing;
 		}
 
-		Texture tex = LoadTexture(texpath);
+		Texture tex = LoadTexture(texpath.c_str());
 		Shader shader = shaders[shadername];
 
-		LOG_F(INFO, "Material %s", fp);
+		LOG_F(INFO, "Material %s", fp.c_str());
 		LOG_F(INFO, "Uses shader %s", shadername.c_str());
 		LOG_F(INFO, "Of ID %i", shader.id);
 

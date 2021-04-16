@@ -14,7 +14,7 @@ struct configStruct {
 	bool debugMode;
 };
 
-configStruct loadConfig(const char *fp)
+configStruct loadConfig(str fp)
 {
 	configStruct conf;
 

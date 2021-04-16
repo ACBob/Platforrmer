@@ -35,7 +35,7 @@ enum TileType{
 class SpriteBase
 {
 	public:
-		SpriteBase(const char* texturefp = "missing.json");
+		SpriteBase(str texturefp = "missing.json");
 		~SpriteBase() {};
 
 		// Renders the sprite
@@ -85,7 +85,7 @@ class EntityBase
 		b2Body *physBody;
 
 	protected:
-		SpriteBase sprite = NULL;
+		SpriteBase sprite;
 };
 
 // Holds the list of entities, Box2D world, etc.

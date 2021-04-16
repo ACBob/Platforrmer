@@ -28,4 +28,4 @@ class EntityLevel
 		World entityWorld;
 };
 
-EntityLevel loadLevel(const char *fp);
+EntityLevel loadLevel(str fp);

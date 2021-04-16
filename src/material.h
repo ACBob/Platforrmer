@@ -28,5 +28,5 @@ namespace material
 
 	// Load texture at fp, relative to the materials/ folder.
 	// giveError will choose if it returns the error texture or not.
-	BobMaterial loadMaterial(const char *fp, bool giveError = true);
+	BobMaterial loadMaterial(str fp, bool giveError = true);
 }
