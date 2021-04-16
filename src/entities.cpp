@@ -33,7 +33,7 @@ void SpriteBase::Render(Vector2 position, float orient) {
 EntityBase::EntityBase(b2World *world)
 {
 	physBody = NULL;
-	sprite = SpriteBase("test.png");
+	sprite = SpriteBase("face.json");
 }
 
 void EntityBase::CreateBody(b2World *world)
@@ -156,6 +156,11 @@ void EntityPlayer::PreThink(float delta)
 	// {
 	// 	physBody->velocity.y = -32;
 	// }
+}
+
+EntityTile::EntityTile(b2World *world) : EntityBase::EntityBase(world)
+{
+	sprite = SpriteBase("face.json");
 }
 
 void EntityTile::CreateBody(b2World *world)

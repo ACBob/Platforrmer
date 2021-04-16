@@ -33,7 +33,7 @@ enum TileType{
 class SpriteBase
 {
 	public:
-		SpriteBase(const char* texturefp);
+		SpriteBase(const char* texturefp = "missing.json");
 		~SpriteBase() {};
 
 		// Renders the sprite
@@ -221,7 +221,7 @@ class EntityPlayer : public EntityBase
 class EntityTile : public EntityBase
 {
 	public:
-		EntityTile(b2World *world) : EntityBase(world) {};
+		EntityTile(b2World *world);
 		~EntityTile() {};
 
 		void CreateBody(b2World *world);

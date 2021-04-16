@@ -16,8 +16,8 @@ namespace material
 
 	// filepaths -> Material
 	std::map<const char*, BobMaterial> mats;
-	// shadername -> shader
-	std::map<const char*, Shader> shaders;
+	// string shadername -> shader
+	std::map<std::string, Shader> shaders;
 	
 	bool init()
 	{
@@ -53,9 +53,9 @@ namespace material
 
 		for (json shaderdef : j)
 		{
-			const char *name; // Name of the shader
+			std::string name; // Name of the shader
 			const char *fs; // frag shader
-			const char *vs; // vert shader
+			const char* vs; // vert shader
 
 			Shader shader; // raylib shader object
 
@@ -64,25 +64,20 @@ namespace material
 			fs = shaderdef["FS"].get<std::string>().c_str();
 			vs = shaderdef["VS"].get<std::string>().c_str(); // Same for the vertex shader
 
-			LOG_F(INFO, vs);
+			// AND The name!
+			name = shaderdef["name"].get<std::string>();
 
 			// Allow forcing use of raylib internal vertex shader
 			if (char(vs[0]) == '0')
 			{
 				// Now we tell raylib to compile the shader for us
-				shader = LoadShader(NULL, fs);
+				shaders[name] = LoadShader(NULL, fs);
 			}
 			else
 			{
 				// Now we tell raylib to compile the shader for us
-				shader = LoadShader(vs, fs);
+				shaders[name] = LoadShader(vs, fs);
 			}
-
-			// AND The name!
-			name = shaderdef["name"].get<std::string>().c_str();
-
-			// Now put it in the hash map
-			shaders[name] = shader;
 
 			// and do some logging
 			LOG_F(INFO, "Loaded shader %s with ID %i.", name, shader.id);
@@ -98,44 +93,46 @@ namespace material
 	BobMaterial loadMaterial(const char *fp, bool giveError)
 	{
 		ChangeDirectory("materials");
-		if (mats.find(fp) != mats.end())
-		{
-			ChangeDirectory("..");
-			return mats[fp];
-		}
+		// if (mats.find(fp) != mats.end())
+		// {
+		// 	ChangeDirectory("..");
+		// 	return mats[fp];
+		// }
 
-		if (!FileExists(fp))
-		{
-			if (giveError)
-			{
-				ChangeDirectory("..");
-				return matMissing;
-			}
-		}
+		// const char *ext = GetFileExtension(fp);
+		// if (strcmp(ext, "json") != 0)
+		// {
+		// 	LOG_F(ERROR, "Attempted to load a non-json file (%s) as texture.", fp);
+		// 	ChangeDirectory("..");
+		// }
 
-		const char *ext = GetFileExtension(fp);
-		if (strcmp(ext, "json") != 0)
-		{
-			LOG_F(ERROR, "Attempted to load a non-json file (%s) as texture.", fp);
-			ChangeDirectory("..");
-			return matMissing;
-		}
+		for (auto& t : shaders)
+			std::cout << t.first << " " << t.second.id << std::endl;
+
+		fp = "missing.json";
+		LOG_F(INFO, "Loading material %s", fp);
 
 		std::ifstream file(fp);
 		json j;
 		file >> j;
 
 		const char *texpath; // "image":
-		const char *shadername; // "shader":
+		std::string shadername; // "shader":
 
 		texpath = j["image"].get<std::string>().c_str();
-		shadername = j["shader"].get<std::string>().c_str();
+		shadername = j["shader"].get<std::string>();
+
+		if (shaders.find(shadername) == shaders.end())
+		{
+			LOG_F(ERROR, "Invalid Material; %s", shadername);
+			return matMissing;
+		}
 
 		Texture tex = LoadTexture(texpath);
 		Shader shader = shaders[shadername];
 
 		LOG_F(INFO, "Material %s", fp);
-		LOG_F(INFO, "Uses shader %s", shadername);
+		LOG_F(INFO, "Uses shader %s", shadername.c_str());
 		LOG_F(INFO, "Of ID %i", shader.id);
 
 		BobMaterial mat;
@@ -144,10 +141,5 @@ namespace material
 
 		ChangeDirectory("..");
 		return mat;
-	}
-
-	Shader getShader(const char *fp)
-	{
-		return shaders[fp];
 	}
 }

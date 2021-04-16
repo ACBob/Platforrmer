@@ -68,8 +68,6 @@ int main(int argc, char* argv[])
     World *entWorld = world.GetWorld();
 
     EntityPlayer *player = entWorld->NewEntity<EntityPlayer>();
-
-    material::BobMaterial testmat = material::loadMaterial("face");
     
     // Main game loop
     while (!WindowShouldClose())
@@ -86,12 +84,6 @@ int main(int argc, char* argv[])
             BeginMode2D(Camera);
 
                 entWorld->Render(config.debugMode);
-
-                BeginShaderMode(testmat.shader);
-
-                    DrawText("FUCK", 0,0, 24, RED);
-
-                EndShaderMode();
 
             EndMode2D();
 
