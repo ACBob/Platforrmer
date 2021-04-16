@@ -13,27 +13,35 @@ using str = std::string;
 class Vector
 {
 	public:
-		float x, y, z = 0;
+		float x, y, z = 0.0f;
 
-		Vector(float x, float y, float z=0)
+		Vector()
 		{
-			this->x, this->y, this->z = x, y, z;
+			x = y = z = 0.0f;
+		}
+		Vector(float x=0, float y=0, float z=0)
+		{
+			this->x = x;
+			this->y = y;
+			this->z = z;
 		}
 	// conversion, from
 		Vector(Vector2 raylibVec)
 		{
-			x, y = raylibVec.x, raylibVec.y;
+			x = raylibVec.x;
+			y = raylibVec.y;
 		}
 		Vector(b2Vec2 box2dVec)
 		{
-			x, y = box2dVec.x, box2dVec.y;
+			x = box2dVec.x;
+			y = box2dVec.y;
 		}
 	// conversion, to
-		operator Vector2()
+		operator Vector2() const
 		{
 			return Vector2({x,y});
 		}
-		operator b2Vec2()
+		operator b2Vec2() const
 		{
 			return b2Vec2(x,y);
 		}
