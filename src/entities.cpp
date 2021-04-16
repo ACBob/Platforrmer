@@ -1,6 +1,7 @@
 // Entities!
 
 #include "raylib.h"
+#include "raymath.h"
 #include "entities.h"
 
 #include "material.h"
@@ -17,16 +18,18 @@ SpriteBase::SpriteBase(str texturefp)
 
 void SpriteBase::Render(Vector position, float orient) {
 
-	position.x = position.x - (mat.tex.width / 2);
-	position.y = position.y - (mat.tex.height / 2);
-
+	Vector offsetPos(-mat.tex.width/2, -mat.tex.height/2);
 	orient = orient * RAD2DEG;
+	offsetPos = Vector2Rotate(offsetPos, orient);
+
+	position = position + offsetPos;
 
 	BeginShaderMode(mat.shader);
-		DrawTextureRec(
+		DrawTextureEx(
 			mat.tex,
-			Rectangle({0,0,mat.tex.width,16}),
 			position,
+			orient,
+			1.0,
 			WHITE
 		);
 	EndShaderMode();
@@ -101,7 +104,7 @@ void EntityPlayer::CreateBody(b2World *world)
 	bodyDef.type = b2_dynamicBody; // TODO: Would kinematic be better?
 	bodyDef.position.Set(0.0f, 0.0);
 	// Don't spin
-	bodyDef.fixedRotation = true;
+	// bodyDef.fixedRotation = true;
 	physBody = world->CreateBody(&bodyDef);
 
 	b2PolygonShape shape;
