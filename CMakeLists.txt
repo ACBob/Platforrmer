@@ -13,9 +13,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 
 # Setting parameters for raylib
-set(BUILD_RAYLIB_CPP_EXAMPLES OFF CACHE BOOL "" FORCE) # don't build the supplied examples
-set(BUILD_TESTING OFF CACHE BOOL "" FORCE) # or the tests
-add_subdirectory(src/thirdparty/raylib-cpp)
+# set(BUILD_RAYLIB_CPP_EXAMPLES OFF CACHE BOOL "" FORCE) # don't build the supplied examples
+# set(BUILD_TESTING OFF CACHE BOOL "" FORCE) # or the tests
+# add_subdirectory(src/thirdparty/raylib-cpp)
 
 # Setting parameters for box2d
 set(BOX2D_BUILD_UNIT_TESTS OFF CACHE BOOL "" FORCE) # don't build the supplied tests
