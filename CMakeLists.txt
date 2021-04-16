@@ -34,6 +34,7 @@ include_directories(${includes})
 
 set(sources
 	main.cpp
+	material.cpp
 	entities.cpp
 	b2debugdraw.cpp
 	levelload.cpp

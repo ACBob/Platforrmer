@@ -3,13 +3,15 @@
 #include "raylib.h"
 #include "entities.h"
 
+#include "material.h"
+
 #include <cstdio>
 #include <math.h>
 
 SpriteBase::SpriteBase(const char* texturefp)
 {
 	// TODO: Material system
-	texture = LoadTexture(texturefp);
+	texture = material::loadTexture(texturefp);
 }
 
 void SpriteBase::Render(Vector2 position, float orient) {
