@@ -69,6 +69,8 @@ int main(int argc, char* argv[])
     EntityLevel world = loadLevel("level.json");
     World *entWorld = world.GetWorld();
 
+    entWorld->physStep = 1.0f/config.frameRate;
+
     EntityPlayer *player = entWorld->NewEntity<EntityPlayer>();
     
     // Main game loop

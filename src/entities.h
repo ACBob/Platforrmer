@@ -143,8 +143,7 @@ class World
 			}
 
 			// Do physics
-			// TODO: get step from framerate
-			physicsworld->Step(1.0f/60.0f, 6, 2);
+			physicsworld->Step(physStep, 6, 2);
 
 		};
 
@@ -199,6 +198,9 @@ class World
 		{
 			return &entlist;
 		}
+
+		// The phys step
+		float physStep = 1/60;
 
 	protected:
 		std::vector<EntityBase*> entlist;
