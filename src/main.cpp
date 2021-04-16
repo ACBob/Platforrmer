@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
     // SetConfigFlags(FLAG_MSAA_4X_HINT);
     // SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(config.screenW, config.screenH, "Platforrmer");
-    SetTargetFPS(60);
+    SetTargetFPS(config.frameRate);
     BeginDrawing();
         ClearBackground(BLACK);
         DrawText("Loading....", config.screenW/2, config.screenH/2, 24, RED);

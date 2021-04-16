@@ -12,6 +12,8 @@ struct configStruct {
 	int screenH;
 
 	bool debugMode;
+
+	int frameRate;
 };
 
 configStruct loadConfig(str fp)
@@ -27,6 +29,8 @@ configStruct loadConfig(str fp)
 	conf.screenH = confjson["screenSize"][1].get<int>();
 
 	conf.debugMode = confjson["enableDebug"].get<bool>();
+
+	conf.frameRate = confjson["frameRate"].get<int>();
 
 	return conf;
 }
