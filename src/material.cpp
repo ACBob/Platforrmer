@@ -113,7 +113,6 @@ namespace material
 		for (auto& t : shaders)
 			std::cout << t.first << " " << t.second.id << std::endl;
 
-		fp = "missing.json";
 		LOG_F(INFO, "Loading material %s", fp.c_str());
 
 		std::ifstream file(fp);
