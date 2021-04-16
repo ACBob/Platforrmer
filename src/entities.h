@@ -39,7 +39,7 @@ class SpriteBase
 		~SpriteBase() {};
 
 		// Renders the sprite
-		void Render(Vector2 position, float orient=0);
+		void Render(Vector position, float orient=0);
 	protected:
 		material::BobMaterial mat;
 };
@@ -56,10 +56,8 @@ class EntityBase
 
 		void Render();
 
-		// Returns position as a RAYLIB Vector2
-		Vector2 GetPosition();
-		// Returns position as a B2D b2Vec2
-		b2Vec2 GetVecPosition();
+		// Returns position
+		Vector GetPosition();
 		float GetRotation();
 
 		// Sets the physBody's position to the b2Vec2

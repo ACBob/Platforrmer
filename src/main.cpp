@@ -60,8 +60,8 @@ int main(int argc, char* argv[])
     // Camera
     Camera2D Camera = Camera2D();
 
-    Camera.target = Vector2({0,0});
-    Camera.offset = Vector2({config.screenW/2, config.screenH/2});
+    Camera.target = Vector(0,0);
+    Camera.offset = Vector(config.screenW/2, config.screenH/2);
     Camera.zoom = 2.0f;
 
     LOG_F(INFO, "Attempt to load level file");

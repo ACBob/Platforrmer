@@ -15,7 +15,7 @@ SpriteBase::SpriteBase(str texturefp)
 	mat = material::loadMaterial(texturefp);
 }
 
-void SpriteBase::Render(Vector2 position, float orient) {
+void SpriteBase::Render(Vector position, float orient) {
 
 	position.x = position.x - (mat.tex.width / 2);
 	position.y = position.y - (mat.tex.height / 2);
@@ -54,13 +54,7 @@ void EntityBase::CreateBody(b2World *world)
 	physBody->CreateFixture(&fixtureDef);
 }
 
-Vector2 EntityBase::GetPosition()
-{
-	// assert(physBody);
-	b2Vec2 pos = physBody->GetPosition();
-	return Vector2({pos.x, pos.y});
-}
-b2Vec2 EntityBase::GetVecPosition()
+Vector EntityBase::GetPosition()
 {
 	return physBody->GetPosition();
 }
@@ -81,7 +75,7 @@ void EntityBase::SetPosition(b2Vec2 position)
 void EntityBase::SetRotation(float orient)
 {
 	physBody->SetTransform(
-		GetVecPosition(),
+		GetPosition(),
 		orient
 	);
 }
@@ -99,8 +93,6 @@ b2Body *EntityBase::GetPhysicsBody()
 
 EntityPlayer::EntityPlayer(b2World *world) : EntityBase(world)
 {
-	// Don't spin
-	// physBody->SetFixedRotation(true);
 }
 
 void EntityPlayer::CreateBody(b2World *world)
@@ -162,7 +154,6 @@ void EntityPlayer::PreThink(float delta)
 
 EntityTile::EntityTile(b2World *world) : EntityBase::EntityBase(world)
 {
-	sprite = SpriteBase("face.json");
 }
 
 void EntityTile::CreateBody(b2World *world)
