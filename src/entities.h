@@ -7,6 +7,8 @@
 
 #include "b2debugdraw.h"
 
+#include "material.h"
+
 #include <vector>
 #include <algorithm>
 
@@ -37,8 +39,7 @@ class SpriteBase
 		// Renders the sprite
 		void Render(Vector2 position, float orient=0);
 	protected:
-		Texture2D texture; // Texture to render with
-		Shader shader; // Shader to render with, given by material system
+		material::BobMaterial mat;
 };
 
 class EntityBase

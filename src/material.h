@@ -9,8 +9,16 @@
 #include "raylib.h"
 #include <vector>
 
+#pragma once
+
 namespace material
 {
+	struct BobMaterial
+	{
+		Texture tex;
+		Shader shader;
+	};
+
 	// Initialise the system
 	bool init();
 	// ONLY TO BE CALLED BY INIT()
@@ -18,7 +26,7 @@ namespace material
 
 	// Load texture at fp, relative to the materials/ folder.
 	// giveError will choose if it returns the error texture or not.
-	Texture loadTexture(const char *fp, bool giveError = true);
+	BobMaterial loadMaterial(const char *fp, bool giveError = true);
 
 	// Returns the shader defined for fp
 	Shader getShader(const char *fp);

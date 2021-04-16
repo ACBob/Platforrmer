@@ -10,21 +10,20 @@
 
 SpriteBase::SpriteBase(const char* texturefp)
 {
-	texture = material::loadTexture(texturefp);
-	shader = material::getShader(texturefp);
+	mat = material::loadMaterial(texturefp);
 }
 
 void SpriteBase::Render(Vector2 position, float orient) {
 
-	position.x = position.x - (texture.width / 2);
-	position.y = position.y - (texture.height / 2);
+	position.x = position.x - (mat.tex.width / 2);
+	position.y = position.y - (mat.tex.height / 2);
 
 	orient = orient * RAD2DEG;
 
-	BeginShaderMode(shader);
+	BeginShaderMode(mat.shader);
 		DrawTextureRec(
-			texture,
-			Rectangle({0,0,texture.width,16}),
+			mat.tex,
+			Rectangle({0,0,mat.tex.width,16}),
 			position,
 			WHITE
 		);

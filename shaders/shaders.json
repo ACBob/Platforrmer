@@ -2,7 +2,7 @@
 	{
 		"name": "world",
 		"FS": "world.fs",
-		"VS": "world.vs"
+		"VS": "0"
 	},
 	{
 		"name": "seizure",

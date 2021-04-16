@@ -12,14 +12,10 @@ using json = nlohmann::json;
 
 namespace material
 {
-	Texture texMissing;
+	material::BobMaterial matMissing;
 
-	// TODO: Why have I done it this way? Why not make our own class?
-
-	// filepaths -> texture
-	std::map<const char*, Texture> texs;
-	// texture name -> shader to render with
-	std::map<const char*, Shader> textoshader;
+	// filepaths -> Material
+	std::map<const char*, BobMaterial> mats;
 	// shadername -> shader
 	std::map<const char*, Shader> shaders;
 	
@@ -27,13 +23,13 @@ namespace material
 	{
 		LOG_F(INFO, "Initializing Materials");
 
-		texMissing = loadTexture("missing.json", false);
-
 		if (!initShaders())
 		{
 			LOG_F(FATAL, "Could not initialise shaders!");
 			return false;
 		}
+
+		matMissing = loadMaterial("missing.json", false);
 
 		return true;
 	}
@@ -68,17 +64,28 @@ namespace material
 			fs = shaderdef["FS"].get<std::string>().c_str();
 			vs = shaderdef["VS"].get<std::string>().c_str(); // Same for the vertex shader
 
+			LOG_F(INFO, vs);
+
+			// Allow forcing use of raylib internal vertex shader
+			if (char(vs[0]) == '0')
+			{
+				// Now we tell raylib to compile the shader for us
+				shader = LoadShader(NULL, fs);
+			}
+			else
+			{
+				// Now we tell raylib to compile the shader for us
+				shader = LoadShader(vs, fs);
+			}
+
 			// AND The name!
 			name = shaderdef["name"].get<std::string>().c_str();
-
-			// Now we tell raylib to compile the shader for us
-			shader = LoadShader(vs, fs);
 
 			// Now put it in the hash map
 			shaders[name] = shader;
 
 			// and do some logging
-			LOG_F(INFO, "Loaded shader %s.", name);
+			LOG_F(INFO, "Loaded shader %s with ID %i.", name, shader.id);
 		}
 
 		ChangeDirectory("..");
@@ -88,13 +95,13 @@ namespace material
 
 	// Load texture at fp, relative to the materials/ folder.
 	// giveError will choose if it returns the error texture or not.
-	Texture loadTexture(const char *fp, bool giveError)
+	BobMaterial loadMaterial(const char *fp, bool giveError)
 	{
 		ChangeDirectory("materials");
-		if (texs.find(fp) != texs.end())
+		if (mats.find(fp) != mats.end())
 		{
 			ChangeDirectory("..");
-			return texs[fp];
+			return mats[fp];
 		}
 
 		if (!FileExists(fp))
@@ -102,7 +109,7 @@ namespace material
 			if (giveError)
 			{
 				ChangeDirectory("..");
-				return texMissing;
+				return matMissing;
 			}
 		}
 
@@ -111,7 +118,7 @@ namespace material
 		{
 			LOG_F(ERROR, "Attempted to load a non-json file (%s) as texture.", fp);
 			ChangeDirectory("..");
-			return texMissing;
+			return matMissing;
 		}
 
 		std::ifstream file(fp);
@@ -127,10 +134,16 @@ namespace material
 		Texture tex = LoadTexture(texpath);
 		Shader shader = shaders[shadername];
 
-		textoshader[fp] = shader;
+		LOG_F(INFO, "Material %s", fp);
+		LOG_F(INFO, "Uses shader %s", shadername);
+		LOG_F(INFO, "Of ID %i", shader.id);
+
+		BobMaterial mat;
+		mat.tex = tex;
+		mat.shader = shader;
 
 		ChangeDirectory("..");
-		return tex;
+		return mat;
 	}
 
 	Shader getShader(const char *fp)
