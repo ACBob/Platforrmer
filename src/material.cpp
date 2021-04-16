@@ -95,11 +95,13 @@ namespace material
 	BobMaterial loadMaterial(str fp, bool giveError)
 	{
 		ChangeDirectory("materials");
-		// if (mats.find(fp) != mats.end())
-		// {
-		// 	ChangeDirectory("..");
-		// 	return mats[fp];
-		// }
+		
+		// We have it loaded already
+		if (mats.find(fp) != mats.end())
+		{
+			ChangeDirectory("..");
+			return mats[fp];
+		}
 
 		// const char *ext = GetFileExtension(fp);
 		// if (strcmp(ext, "json") != 0)

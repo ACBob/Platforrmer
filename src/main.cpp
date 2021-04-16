@@ -85,7 +85,7 @@ int main(int argc, char* argv[])
 
             BeginMode2D(Camera);
 
-                entWorld->Render(config.debugMode);
+                world.Render(config.debugMode);
 
             EndMode2D();
 

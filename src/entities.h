@@ -80,7 +80,7 @@ class EntityBase
 		bool isDead = false;
 
 		// Physics Body
-		b2Body *physBody;
+		b2Body *physBody = NULL;
 
 	protected:
 		SpriteBase sprite;

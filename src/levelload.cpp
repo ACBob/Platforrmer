@@ -30,9 +30,19 @@ EntityLevel::~EntityLevel()
 }
 
 // Return a pointer to the tile list
-std::vector<EntityTile*>* EntityLevel::GetTiles()
+std::vector<EntityTile>* EntityLevel::GetTiles()
 {
 	return &tiles;
+}
+
+void EntityLevel::Render(bool debug)
+{
+	// Render tiles
+	for (auto tile: tiles)
+		tile.Render();
+
+	// Render our entity world
+	entityWorld.Render(debug);
 }
 
 EntityLevel loadLevel(str fp)
@@ -93,7 +103,7 @@ EntityLevel loadLevel(str fp)
 		// TODO: Material
 
 		// Now add it to our tiles
-		level.GetTiles()->push_back(&tile);
+		level.GetTiles()->push_back(tile);
 
 	}
 
