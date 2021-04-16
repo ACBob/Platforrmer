@@ -113,8 +113,6 @@ namespace material
 		for (auto& t : shaders)
 			std::cout << t.first << " " << t.second.id << std::endl;
 
-		LOG_F(INFO, "Loading material %s", fp.c_str());
-
 		std::ifstream file(fp);
 		json j;
 		file >> j;
@@ -133,10 +131,6 @@ namespace material
 
 		Texture tex = LoadTexture(texpath.c_str());
 		Shader shader = shaders[shadername];
-
-		LOG_F(INFO, "Material %s", fp.c_str());
-		LOG_F(INFO, "Uses shader %s", shadername.c_str());
-		LOG_F(INFO, "Of ID %i", shader.id);
 
 		BobMaterial mat;
 		mat.tex = tex;
