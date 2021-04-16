@@ -8,6 +8,8 @@
 #include <cstdio>
 #include <math.h>
 
+#include "include.h" // SHOULD BE IN EVERY FILE!
+
 SpriteBase::SpriteBase(const char* texturefp)
 {
 	mat = material::loadMaterial(texturefp);

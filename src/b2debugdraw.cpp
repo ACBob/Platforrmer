@@ -1,6 +1,8 @@
 #include "b2debugdraw.h"
 #include "loguru.hpp"
 
+#include "include.h" // SHOULD BE IN EVERY FILE!
+
 void RaylibB2Debug::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {
 	Color color1;

@@ -10,6 +10,8 @@
 
 #include "box2d/box2d.h"
 
+#include "include.h" // SHOULD BE IN EVERY FILE!
+
 int main(int argc, char* argv[])
 {
     // loguru::add_file("console.log", loguru::Truncate, loguru::Verbosity_MAX);

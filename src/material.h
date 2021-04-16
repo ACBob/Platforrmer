@@ -9,6 +9,8 @@
 #include "raylib.h"
 #include <vector>
 
+#include "include.h" // SHOULD BE IN EVERY FILE!
+
 #pragma once
 
 namespace material

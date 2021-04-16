@@ -3,6 +3,8 @@
 #include "nlohmann/json.hpp"
 #include <fstream>
 
+#include "include.h" // SHOULD BE IN EVERY FILE!
+
 using json = nlohmann::json;
 
 struct configStruct {

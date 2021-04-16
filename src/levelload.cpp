@@ -12,6 +12,8 @@
 #include <vector>
 #include <string>
 
+#include "include.h" // SHOULD BE IN EVERY FILE!
+
 using json = nlohmann::json;
 
 // *TECHNICALLY* an entity

@@ -8,6 +8,8 @@ using json = nlohmann::json;
 #include <iostream>
 #include <loguru.hpp>
 
+#include "include.h" // SHOULD BE IN EVERY FILE!
+
 #define GLSL_VERSION            330
 
 namespace material

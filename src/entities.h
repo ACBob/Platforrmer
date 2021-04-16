@@ -14,6 +14,8 @@
 
 #include "loguru.hpp"
 
+#include "include.h" // SHOULD BE IN EVERY FILE!
+
 // TODO: not this
 #define SPRITE_HEIGHT 16
 #define SPRITE_WIDTH 16

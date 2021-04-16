@@ -3,6 +3,8 @@
 #include "box2d/box2d.h"
 #include "raylib.h"
 
+#include "include.h" // SHOULD BE IN EVERY FILE!
+
 class RaylibB2Debug : public b2Draw
 {
 	public:
