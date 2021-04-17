@@ -46,6 +46,16 @@ void EntityLevel::Render(bool debug)
 	entityWorld.Render(debug);
 }
 
+// TODO: THIS IN A MUCH MUCH BETTER WAY
+// 0 -> INVALID
+std::map<str, int> entids =
+{
+	{"base", 0},
+	{"player", 0},
+	{"tile", 0},
+	{"phys_ball", 1}
+};
+
 EntityLevel loadLevel(str fp)
 {
 	EntityLevel level;
@@ -105,6 +115,39 @@ EntityLevel loadLevel(str fp)
 
 		// Now add it to our tiles
 		level.GetTiles()->push_back(tile);
+
+	}
+
+	for (json entdef : j["entities"])
+	{
+		// TODO: THIS IN A MUCH MUCH BETTER WAY
+		str entname = entdef["entname"].get<str>();
+		EntityBase *ent;
+
+		switch(entids[entname])
+		{
+			case 0:
+				LOG_F(ERROR, "Entity of type %s cannot be created with levels.", entname.c_str());
+				continue;
+			break;
+
+			case 1: // PHYS_BALL
+				ent = level.GetWorld()->NewEntity<EntityBouncyBall>();
+			break;
+
+			default:
+				LOG_F(ERROR, "Unkown Entity %s.", entname.c_str());
+				continue;
+			break;
+		}
+
+		Vector pos(0,0);
+
+		// For now all level coordinates are grid based
+		pos.x = entdef["pos"][0].get<float>() * 16;
+		pos.y = entdef["pos"][1].get<float>() * 16;
+
+		ent->SetPosition(pos);
 
 	}
 

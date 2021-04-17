@@ -58,6 +58,10 @@
 			"entname": "phys_ball",
 			"pos": [4,-3],
 			"bounciness": 0.2
+		},
+		{
+			"entname": "intentionally invalid",
+			"pos": [69,420]
 		}
 	]
 }

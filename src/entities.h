@@ -11,6 +11,7 @@
 
 #include <vector>
 #include <algorithm>
+#include <map>
 
 #include "loguru.hpp"
 
@@ -19,6 +20,8 @@
 // TODO: not this
 #define SPRITE_HEIGHT 16
 #define SPRITE_WIDTH 16
+
+#pragma once
 
 // Arbitrary
 #define MAXENTS 1024

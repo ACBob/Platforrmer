@@ -82,7 +82,7 @@ namespace material
 			}
 
 			// and do some logging
-			LOG_F(INFO, "Loaded shader %s with ID %i.", name, shader.id);
+			LOG_F(INFO, "Loaded shader %s with ID %i.", name.c_str(), shader.id);
 		}
 
 		ChangeDirectory("..");

@@ -8,6 +8,7 @@
 
 #include <cstdio>
 #include <math.h>
+#include <map>
 
 #include "include.h" // SHOULD BE IN EVERY FILE!
 
