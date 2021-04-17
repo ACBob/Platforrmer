@@ -45,6 +45,12 @@ class Vector
 		{
 			return b2Vec2(x,y);
 		}
+		operator str() const
+		{
+			char buff[256];
+  			snprintf(buff, sizeof(buff), "(%f,%f)", x, y);
+			return buff;
+		}
 
 	// Operators
 	// Math, with other vectors
