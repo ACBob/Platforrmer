@@ -78,6 +78,9 @@ int main(int argc, char* argv[])
     // Main game loop
     while (!WindowShouldClose())
     {
+        if (IsKeyPressed(KEY_G))
+            config.debugMode = !config.debugMode;
+
         float delta = GetFrameTime();
         entWorld->FrameStart(delta);
 
