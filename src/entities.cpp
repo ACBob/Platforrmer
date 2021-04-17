@@ -13,7 +13,6 @@
 
 namespace entities
 {
-
 	SpriteBase::SpriteBase(str texturefp)
 	{
 		mat = material::loadMaterial(texturefp);
@@ -70,7 +69,7 @@ namespace entities
 		return physBody->GetAngle();
 	}
 
-	void EntityBase::SetPosition(b2Vec2 position)
+	void EntityBase::SetPosition(Vector position)
 	{
 		physBody->SetTransform(
 			position,
@@ -176,6 +175,33 @@ namespace entities
 		b2FixtureDef fixtureDef;
 		fixtureDef.shape = &shape;
 		fixtureDef.density = 1;
+		physBody->CreateFixture(&fixtureDef);
+	}
+
+	void init()
+	{
+
+	}
+
+	EntityBouncyBall::EntityBouncyBall(b2World *world) : EntityBase::EntityBase(world)
+	{
+		sprite = SpriteBase("ball.json");
+	}
+
+	void EntityBouncyBall::CreateBody(b2World *world)
+	{
+		b2BodyDef bodyDef;
+		bodyDef.type = b2_dynamicBody;
+		bodyDef.position.Set(0.0f, 0.0);
+		physBody = world->CreateBody(&bodyDef);
+
+		b2CircleShape shape;
+		shape.m_radius = 8;
+
+		b2FixtureDef fixtureDef;
+		fixtureDef.shape = &shape;
+		fixtureDef.density = 1;
+		fixtureDef.restitution = 0.9; // Boing boing
 		physBody->CreateFixture(&fixtureDef);
 	}
 }

@@ -55,6 +55,12 @@ namespace entities
 				isDead = true;
 			};
 
+			// MUST Be replaced, will allow creation during game.
+			virtual str classname()
+			{
+				return "_";
+			};
+
 			void Render();
 
 			// Returns position
@@ -62,7 +68,7 @@ namespace entities
 			float GetRotation();
 
 			// Sets the physBody's position to the b2Vec2
-			void SetPosition(b2Vec2 pos);
+			void SetPosition(Vector pos);
 			// Sets the rotation to orient radians
 			void SetRotation(float orient);
 
@@ -218,6 +224,11 @@ namespace entities
 			void CreateBody(b2World *world);
 
 			void PreThink(float delta);
+
+			str classname()
+			{
+				return "player";
+			}
 	};
 
 	// A tile in the world
@@ -238,7 +249,27 @@ namespace entities
 				return type;
 			}
 
+			str classname()
+			{
+				return "worldtile";
+			}
+
 		protected:
 			TileType type;
+	};
+
+	void init();
+
+	// Boing boing!
+	class EntityBouncyBall : public EntityBase
+	{
+		public:
+			EntityBouncyBall(b2World *world);
+			void CreateBody(b2World *world);
+
+			str classname()
+			{
+				return "phys_ball";
+			}
 	};
 }

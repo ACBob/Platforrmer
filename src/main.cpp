@@ -54,6 +54,9 @@ int main(int argc, char* argv[])
         DrawText("Loading....", config.screenW/2, config.screenH/2, 24, RED);
     EndDrawing();
 
+    // Init Entities
+    entities::init();
+
     // Init material system
     material::init();
 
@@ -74,6 +77,9 @@ int main(int argc, char* argv[])
     entWorld->physStep = 1.0f/config.frameRate;
 
     entities::EntityPlayer *player = entWorld->NewEntity<entities::EntityPlayer>();
+
+    entities::EntityBouncyBall *testBall = entWorld->NewEntity<entities::EntityBouncyBall>();
+    testBall->SetPosition(Vector(72, -32));
     
     // Main game loop
     while (!WindowShouldClose())
