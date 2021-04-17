@@ -14,7 +14,7 @@ out vec4 finalColor;
 void main()
 {
 	float horzMix = distance(fragTexCoord.y,1) - 0.25;
-	vec3 color1 = vec3(0.854,0.987,1.0);
+	vec3 color1 = vec3(0.689,0.801,1.0);
 	vec3 color2 = vec3(0.612,0.922,0.952);
 
     finalColor = vec4(mix(color1, color2, horzMix), 1);
