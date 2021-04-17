@@ -128,7 +128,7 @@ namespace entities
 	void EntityPlayer::PreThink(float delta)
 	{
 		// Handle input
-		if (IsKeyPressed(KEY_RIGHT))
+		if (IsKeyDown(KEY_RIGHT))
 		{
 			physBody->SetLinearVelocity(
 				b2Vec2(
@@ -137,7 +137,7 @@ namespace entities
 				)
 			);
 		}
-		else if (IsKeyPressed(KEY_LEFT))
+		else if (IsKeyDown(KEY_LEFT))
 		{
 			physBody->SetLinearVelocity(
 				b2Vec2(
