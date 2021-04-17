@@ -5,8 +5,8 @@
 		"VS": "world.vs"
 	},
 	{
-		"name": "seizure",
-		"FS": "world.fs",
+		"name": "sky",
+		"FS": "sky.fs",
 		"VS": "world.vs"
 	}
 ]

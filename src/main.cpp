@@ -57,6 +57,8 @@ int main(int argc, char* argv[])
     // Init material system
     material::init();
 
+    Shader skyShader = material::getShader("sky");
+
     // Camera
     Camera2D Camera = Camera2D();
 
@@ -83,7 +85,12 @@ int main(int argc, char* argv[])
         Camera.target = player->GetPosition();
 
         BeginDrawing();
-            ClearBackground(SKYBLUE);
+            ClearBackground(RED);
+
+            // Draw Sky
+            BeginShaderMode(skyShader);
+                DrawRectangle(0,0,config.screenW, config.screenH,WHITE);
+            EndShaderMode();
 
             BeginMode2D(Camera);
 

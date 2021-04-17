@@ -90,6 +90,11 @@ namespace material
 		return true;
 	}
 
+	Shader getShader(str name)
+	{
+		return shaders[name];
+	}
+
 	// Load texture at fp, relative to the materials/ folder.
 	// giveError will choose if it returns the error texture or not.
 	BobMaterial loadMaterial(str fp, bool giveError)
