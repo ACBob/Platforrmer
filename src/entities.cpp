@@ -120,7 +120,7 @@ namespace entities
 
 		b2FixtureDef fixtureDef;
 		fixtureDef.shape = &shape;
-		fixtureDef.density = 1;
+		fixtureDef.density = 5;
 		fixtureDef.restitution = 0;
 		physBody->CreateFixture(&fixtureDef);
 	}
