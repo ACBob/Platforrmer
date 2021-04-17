@@ -157,6 +157,7 @@ void EntityPlayer::PreThink(float delta)
 
 EntityTile::EntityTile(b2World *world) : EntityBase::EntityBase(world)
 {
+	sprite = SpriteBase("floor.json");
 }
 
 void EntityTile::CreateBody(b2World *world)
