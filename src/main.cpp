@@ -104,6 +104,8 @@ int main(int argc, char* argv[])
 
             EndMode2D();
 
+            DrawFPS(0,0);
+
         EndDrawing();
         
         entWorld->FrameEnd(delta);
