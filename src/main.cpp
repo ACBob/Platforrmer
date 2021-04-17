@@ -20,7 +20,6 @@ int main(int argc, char* argv[])
 
     // now find the bin directory by assuming that the executable is it...
     str binpath = GetDirectoryPath(argv[0]); // Raylib wins again!
-    binpath = binpath.substr(2, binpath.back()); //! HACKHACKHACK: REMOVE ./ FROM START OF PATH
     LOG_F(INFO, "Assuming bin to be %s", binpath.c_str());
     str respath = GetPrevDirectoryPath(binpath.c_str());
     LOG_F(INFO, "Resources are PROBABLY at %s", respath.c_str());
