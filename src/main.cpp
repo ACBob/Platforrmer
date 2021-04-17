@@ -69,11 +69,11 @@ int main(int argc, char* argv[])
     LOG_F(INFO, "Attempt to load level file");
     
     EntityLevel world = loadLevel("level.json");
-    World *entWorld = world.GetWorld();
+    entities::World *entWorld = world.GetWorld();
 
     entWorld->physStep = 1.0f/config.frameRate;
 
-    EntityPlayer *player = entWorld->NewEntity<EntityPlayer>();
+    entities::EntityPlayer *player = entWorld->NewEntity<entities::EntityPlayer>();
     
     // Main game loop
     while (!WindowShouldClose())

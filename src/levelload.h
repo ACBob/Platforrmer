@@ -10,10 +10,10 @@ class EntityLevel
 		~EntityLevel();
 
 		// Return a pointer to the tile list
-		std::vector<EntityTile>* GetTiles();
-		std::vector<EntityBase*>* entities; // Pointer to entityWorld's entity vector
+		std::vector<entities::EntityTile>* GetTiles();
+		std::vector<entities::EntityBase*>* entities; // Pointer to entityWorld's entity vector
 
-		World* GetWorld()
+		entities::World* GetWorld()
 		{
 			return &entityWorld;
 		}
@@ -26,8 +26,8 @@ class EntityLevel
 		void Render(bool debug);
 
 	protected:
-		std::vector<EntityTile> tiles;
-		World entityWorld;
+		std::vector<entities::EntityTile> tiles;
+		entities::World entityWorld;
 };
 
 EntityLevel loadLevel(str fp);

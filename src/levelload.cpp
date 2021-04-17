@@ -15,6 +15,7 @@
 #include "include.h" // SHOULD BE IN EVERY FILE!
 
 using json = nlohmann::json;
+using namespace entities;
 
 // *TECHNICALLY* an entity
 // But not really
