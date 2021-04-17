@@ -18,6 +18,10 @@ namespace entities
 	{
 		mat = material::loadMaterial(texturefp);
 	}
+	void SpriteBase::SetNewMaterial(str texturefp)
+	{
+		mat = material::loadMaterial(texturefp);
+	}
 
 	void SpriteBase::Render(Vector position, float orient) {
 
@@ -41,7 +45,7 @@ namespace entities
 	EntityBase::EntityBase(b2World *world)
 	{
 		physBody = NULL;
-		sprite = SpriteBase("face.json");
+		sprite = SpriteBase("missing.json");
 	}
 
 	void EntityBase::CreateBody(b2World *world)
@@ -99,6 +103,7 @@ namespace entities
 
 	EntityPlayer::EntityPlayer(b2World *world) : EntityBase(world)
 	{
+		SetSprite("face.json");
 	}
 
 	void EntityPlayer::CreateBody(b2World *world)
@@ -160,7 +165,7 @@ namespace entities
 
 	EntityTile::EntityTile(b2World *world) : EntityBase::EntityBase(world)
 	{
-		sprite = SpriteBase("floor.json");
+		SetSprite("floor.json");
 	}
 
 	void EntityTile::CreateBody(b2World *world)
@@ -186,7 +191,7 @@ namespace entities
 
 	EntityBouncyBall::EntityBouncyBall(b2World *world) : EntityBase::EntityBase(world)
 	{
-		sprite = SpriteBase("ball.json");
+		SetSprite("ball.json");
 	}
 
 	void EntityBouncyBall::CreateBody(b2World *world)

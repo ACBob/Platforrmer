@@ -44,6 +44,8 @@ namespace entities
 
 			// Renders the sprite
 			void Render(Vector position, float orient=0);
+
+			void SetNewMaterial(str texturefp);
 		protected:
 			material::BobMaterial mat;
 	};
@@ -84,6 +86,11 @@ namespace entities
 			virtual void Think(float delta) {};
 			// Called at the end of a frame
 			virtual void PostThink(float delta) {};
+
+			void SetSprite(str matname)
+			{
+				sprite.SetNewMaterial(matname);
+			}
 
 			// Set to true to remove.
 			// Should test against this when accessing.
