@@ -60,7 +60,7 @@ EntityLevel loadLevel( str fp )
 	std::ifstream f( fp );
 	try
 	{
-		j = json::parse(f, nullptr, true);
+		j = json::parse(f, nullptr, true, true);
 	}
 	catch(json::parse_error& e)
 	{
@@ -155,6 +155,6 @@ EntityLevel loadLevel( str fp )
 
 		ent->SetPosition( pos );
 	}
-	
+
 	return level;
 }

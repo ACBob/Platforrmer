@@ -1,7 +1,7 @@
-// A level file, written by hand!
-// Editors should be pretty easy to make.
-// Although I'm not sure many JSON loaders support comments!
 {
+	// A level file, written by hand!
+	// Editors should be pretty easy to make.
+	// Although I'm not sure many JSON loaders support comments!
 	// Name is used on the worldmap.
 	// Description is used... somewhere. maybe.
 	"name": "TEST_LEVEL",
