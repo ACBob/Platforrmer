@@ -122,12 +122,12 @@ namespace material
 		json j;
 		try
 		{
-			j = json::parse(file, nullptr, true, true);
+			j = json::parse( file, nullptr, true, true );
 		}
-		catch(json::parse_error &e)
+		catch ( json::parse_error &e )
 		{
-			LOG_F(ERROR, "Material file %s is malformed! (ERROR %i)", fp.c_str(), e.id);
-			LOG_F(ERROR, e.what());
+			LOG_F( ERROR, "Material file %s is malformed! (ERROR %i)", fp.c_str(), e.id );
+			LOG_F( ERROR, e.what() );
 			return matMissing;
 		}
 
