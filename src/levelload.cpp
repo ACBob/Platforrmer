@@ -66,8 +66,10 @@ EntityLevel loadLevel( str fp )
 	{
 		LOG_F(ERROR, "Level file %s is malformed! (ERROR %i)", fp.c_str(), e.id);
 		LOG_F(ERROR, e.what());
+		ChangeDirectory("..");
 		return level; // Return blank level
 	}
+	ChangeDirectory("..");
 
 	// Load blocks
 	for ( json blockdef : j["blocks"] )
@@ -153,7 +155,6 @@ EntityLevel loadLevel( str fp )
 
 		ent->SetPosition( pos );
 	}
-
-	ChangeDirectory("..");
+	
 	return level;
 }
