@@ -7,7 +7,8 @@
 
 using json = nlohmann::json;
 
-struct configStruct {
+struct configStruct
+{
 	int screenW;
 	int screenH;
 
@@ -16,15 +17,15 @@ struct configStruct {
 	int frameRate;
 };
 
-configStruct loadConfig(str fp)
+configStruct loadConfig( str fp )
 {
 	configStruct conf;
 
 	json confjson;
 
-	std::ifstream f(fp);
+	std::ifstream f( fp );
 	confjson << f;
-	
+
 	conf.screenW = confjson["screenSize"][0].get<int>();
 	conf.screenH = confjson["screenSize"][1].get<int>();
 

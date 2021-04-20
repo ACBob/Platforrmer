@@ -14,54 +14,49 @@
 
 namespace entities
 {
-	SpriteBase::SpriteBase(str texturefp)
+	SpriteBase::SpriteBase( str texturefp )
 	{
-		mat = material::loadMaterial(texturefp);
+		mat = material::loadMaterial( texturefp );
 	}
-	void SpriteBase::SetNewMaterial(str texturefp)
+	void SpriteBase::SetNewMaterial( str texturefp )
 	{
-		mat = material::loadMaterial(texturefp);
+		mat = material::loadMaterial( texturefp );
 	}
 
-	void SpriteBase::Render(Vector position, float orient) {
+	void SpriteBase::Render( Vector position, float orient )
+	{
 
-		Vector offsetPos(-mat.tex.width/2, -mat.tex.height/2);
+		Vector offsetPos( -mat.tex.width / 2, -mat.tex.height / 2 );
 		orient = orient * RAD2DEG;
-		offsetPos = Vector2Rotate(offsetPos, orient);
+		offsetPos = Vector2Rotate( offsetPos, orient );
 
 		position = position + offsetPos;
 
-		BeginShaderMode(mat.shader);
-			DrawTextureEx(
-				mat.tex,
-				position,
-				orient,
-				1.0,
-				WHITE
-			);
+		BeginShaderMode( mat.shader );
+		DrawTextureEx( mat.tex, position, orient, 1.0, WHITE );
 		EndShaderMode();
 	}
 
-	EntityBase::EntityBase(b2World *world)
+	EntityBase::EntityBase( b2World *world )
 	{
 		physBody = NULL;
-		sprite = SpriteBase("missing.json");
+		sprite = SpriteBase( "missing.json" );
 	}
 
-	void EntityBase::CreateBody(b2World *world)
+	void EntityBase::CreateBody( b2World *world )
 	{
 		b2BodyDef bodyDef;
 		bodyDef.type = b2_dynamicBody;
-		bodyDef.position.Set(0.0f, 0.0);
-		physBody = world->CreateBody(&bodyDef);
+		bodyDef.position.Set( 0.0f, 0.0 );
+		physBody = world->CreateBody( &bodyDef );
 
 		b2PolygonShape shape;
-		shape.SetAsBox(8,8);
+		shape.SetAsBox( 8, 8 );
 
 		b2FixtureDef fixtureDef;
 		fixtureDef.shape = &shape;
 		fixtureDef.density = 1;
-		physBody->CreateFixture(&fixtureDef);
+		physBody->CreateFixture( &fixtureDef );
 	}
 
 	Vector EntityBase::GetPosition()
@@ -74,25 +69,19 @@ namespace entities
 		return physBody->GetAngle();
 	}
 
-	void EntityBase::SetPosition(Vector position)
+	void EntityBase::SetPosition( Vector position )
 	{
-		physBody->SetTransform(
-			position,
-			GetRotation()
-		);
+		physBody->SetTransform( position, GetRotation() );
 	}
 
-	void EntityBase::SetRotation(float orient)
+	void EntityBase::SetRotation( float orient )
 	{
-		physBody->SetTransform(
-			GetPosition(),
-			orient
-		);
+		physBody->SetTransform( GetPosition(), orient );
 	}
 
 	void EntityBase::Render()
 	{
-		sprite.Render(GetPosition(), GetRotation());
+		sprite.Render( GetPosition(), GetRotation() );
 	}
 
 	b2Body *EntityBase::GetPhysicsBody()
@@ -100,61 +89,45 @@ namespace entities
 		return physBody;
 	}
 
-
-	EntityPlayer::EntityPlayer(b2World *world) : EntityBase(world)
+	EntityPlayer::EntityPlayer( b2World *world ) : EntityBase( world )
 	{
-		SetSprite("face.json");
+		SetSprite( "face.json" );
 	}
 
-	void EntityPlayer::CreateBody(b2World *world)
+	void EntityPlayer::CreateBody( b2World *world )
 	{
 		b2BodyDef bodyDef;
 		bodyDef.type = b2_dynamicBody; // TODO: Would kinematic be better?
-		bodyDef.position.Set(0.0f, 0.0);
+		bodyDef.position.Set( 0.0f, 0.0 );
 		// Don't spin
 		// bodyDef.fixedRotation = true;
-		physBody = world->CreateBody(&bodyDef);
+		physBody = world->CreateBody( &bodyDef );
 
 		b2PolygonShape shape;
-		shape.SetAsBox(8,8);
+		shape.SetAsBox( 8, 8 );
 
 		b2FixtureDef fixtureDef;
 		fixtureDef.shape = &shape;
 		fixtureDef.density = 5;
 		fixtureDef.restitution = 0;
-		physBody->CreateFixture(&fixtureDef);
+		physBody->CreateFixture( &fixtureDef );
 	}
 
-	void EntityPlayer::PreThink(float delta)
+	void EntityPlayer::PreThink( float delta )
 	{
 		// Handle input
-		if (IsKeyDown(KEY_RIGHT))
+		if ( IsKeyDown( KEY_RIGHT ) )
 		{
-			physBody->SetLinearVelocity(
-				b2Vec2(
-					32.0f,
-					physBody->GetLinearVelocity().y
-				)
-			);
+			physBody->SetLinearVelocity( b2Vec2( 32.0f, physBody->GetLinearVelocity().y ) );
 		}
-		else if (IsKeyDown(KEY_LEFT))
+		else if ( IsKeyDown( KEY_LEFT ) )
 		{
-			physBody->SetLinearVelocity(
-				b2Vec2(
-					-32.0f,
-					physBody->GetLinearVelocity().y
-				)
-			);
+			physBody->SetLinearVelocity( b2Vec2( -32.0f, physBody->GetLinearVelocity().y ) );
 		}
 
-		if (IsKeyReleased(KEY_RIGHT) || IsKeyReleased(KEY_LEFT))
+		if ( IsKeyReleased( KEY_RIGHT ) || IsKeyReleased( KEY_LEFT ) )
 		{
-			physBody->SetLinearVelocity(
-				b2Vec2(
-					0,
-					physBody->GetLinearVelocity().y
-				)
-			);
+			physBody->SetLinearVelocity( b2Vec2( 0, physBody->GetLinearVelocity().y ) );
 		}
 
 		// if (IsKeyPressed(KEY_UP) && physBody->isGrounded)
@@ -163,43 +136,42 @@ namespace entities
 		// }
 	}
 
-	EntityTile::EntityTile(b2World *world) : EntityBase::EntityBase(world)
+	EntityTile::EntityTile( b2World *world ) : EntityBase::EntityBase( world )
 	{
-		SetSprite("floor.json");
+		SetSprite( "floor.json" );
 	}
 
-	void EntityTile::CreateBody(b2World *world)
+	void EntityTile::CreateBody( b2World *world )
 	{
 		b2BodyDef bodyDef;
 		bodyDef.type = b2_staticBody;
-		bodyDef.position.Set(0.0f, 0.0);
-		physBody = world->CreateBody(&bodyDef);
+		bodyDef.position.Set( 0.0f, 0.0 );
+		physBody = world->CreateBody( &bodyDef );
 
 		b2PolygonShape shape;
-		shape.SetAsBox(8,8);
+		shape.SetAsBox( 8, 8 );
 
 		b2FixtureDef fixtureDef;
 		fixtureDef.shape = &shape;
 		fixtureDef.density = 1;
-		physBody->CreateFixture(&fixtureDef);
+		physBody->CreateFixture( &fixtureDef );
 	}
 
 	void init()
 	{
-
 	}
 
-	EntityBouncyBall::EntityBouncyBall(b2World *world) : EntityBase::EntityBase(world)
+	EntityBouncyBall::EntityBouncyBall( b2World *world ) : EntityBase::EntityBase( world )
 	{
-		SetSprite("ball.json");
+		SetSprite( "ball.json" );
 	}
 
-	void EntityBouncyBall::CreateBody(b2World *world)
+	void EntityBouncyBall::CreateBody( b2World *world )
 	{
 		b2BodyDef bodyDef;
 		bodyDef.type = b2_dynamicBody;
-		bodyDef.position.Set(0.0f, 0.0);
-		physBody = world->CreateBody(&bodyDef);
+		bodyDef.position.Set( 0.0f, 0.0 );
+		physBody = world->CreateBody( &bodyDef );
 
 		b2CircleShape shape;
 		shape.m_radius = 8;
@@ -208,6 +180,6 @@ namespace entities
 		fixtureDef.shape = &shape;
 		fixtureDef.density = 1;
 		fixtureDef.restitution = 0.9; // Boing boing
-		physBody->CreateFixture(&fixtureDef);
+		physBody->CreateFixture( &fixtureDef );
 	}
-}
+} // namespace entities

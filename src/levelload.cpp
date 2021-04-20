@@ -31,41 +31,35 @@ EntityLevel::~EntityLevel()
 }
 
 // Return a pointer to the tile list
-std::vector<EntityTile>* EntityLevel::GetTiles()
+std::vector<EntityTile> *EntityLevel::GetTiles()
 {
 	return &tiles;
 }
 
-void EntityLevel::Render(bool debug)
+void EntityLevel::Render( bool debug )
 {
 	// Render tiles
-	for (auto tile: tiles)
+	for ( auto tile : tiles )
 		tile.Render();
 
 	// Render our entity world
-	entityWorld.Render(debug);
+	entityWorld.Render( debug );
 }
 
 // TODO: THIS IN A MUCH MUCH BETTER WAY
 // 0 -> INVALID
-std::map<str, int> entids =
-{
-	{"base", 0},
-	{"player", 0},
-	{"tile", 0},
-	{"phys_ball", 1}
-};
+std::map<str, int> entids = { { "base", 0 }, { "player", 0 }, { "tile", 0 }, { "phys_ball", 1 } };
 
-EntityLevel loadLevel(str fp)
+EntityLevel loadLevel( str fp )
 {
 	EntityLevel level;
 
-	std::ifstream file(fp);
+	std::ifstream file( fp );
 	json j;
 	file >> j;
 
 	// Load blocks
-	for (json blockdef : j["blocks"])
+	for ( json blockdef : j["blocks"] )
 	{
 		b2Vec2 position;
 		str texture;
@@ -90,9 +84,10 @@ EntityLevel loadLevel(str fp)
 
 		x = blockdef["pos"][0].get<float>();
 		y = blockdef["pos"][1].get<float>();
-		x *= 16; y *= 16; // Assume it to be grid-based
+		x *= 16;
+		y *= 16; // Assume it to be grid-based
 
-		position.Set(x, y);
+		position.Set( x, y );
 
 		// TODO: textureName
 		//! This requires the material system!
@@ -101,54 +96,51 @@ EntityLevel loadLevel(str fp)
 		// TODO: Should we allow it to be determined from material, if absent?
 		// TODO: DETERMINE INSTEAD OF ASSUMING GROUND!
 		typeOfTile = TileType::TL_GRND;
-		
 
 		// And now make a tile entity
-		EntityTile tile(level.GetPhysWorld());
+		EntityTile tile( level.GetPhysWorld() );
 		// Create its' body
-		tile.CreateBody(level.GetPhysWorld());
+		tile.CreateBody( level.GetPhysWorld() );
 
 		// Set its' attributes
-		tile.SetPosition(position);
-		tile.SetType(typeOfTile);
+		tile.SetPosition( position );
+		tile.SetType( typeOfTile );
 		// TODO: Material
 
 		// Now add it to our tiles
-		level.GetTiles()->push_back(tile);
-
+		level.GetTiles()->push_back( tile );
 	}
 
-	for (json entdef : j["entities"])
+	for ( json entdef : j["entities"] )
 	{
 		// TODO: THIS IN A MUCH MUCH BETTER WAY
 		str entname = entdef["entname"].get<str>();
 		EntityBase *ent;
 
-		switch(entids[entname])
+		switch ( entids[entname] )
 		{
 			case 0:
-				LOG_F(ERROR, "Entity of type %s cannot be created with levels.", entname.c_str());
+				LOG_F( ERROR, "Entity of type %s cannot be created with levels.", entname.c_str() );
 				continue;
-			break;
+				break;
 
 			case 1: // PHYS_BALL
 				ent = level.GetWorld()->NewEntity<EntityBouncyBall>();
-			break;
+				break;
 
 			default:
-				LOG_F(ERROR, "Unkown Entity %s.", entname.c_str());
+				LOG_F( ERROR, "Unkown Entity %s.", entname.c_str() );
 				continue;
-			break;
+				break;
 		}
 
-		Vector pos(0,0);
+		Vector pos( 0, 0 );
 
 		// For now all level coordinates are grid based
 		pos.x = entdef["pos"][0].get<float>() * 16;
 		pos.y = entdef["pos"][1].get<float>() * 16;
 
-		ent->SetPosition(pos);
-
+		ent->SetPosition( pos );
 	}
 
 	return level;

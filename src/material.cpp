@@ -10,7 +10,7 @@ using json = nlohmann::json;
 
 #include "include.h" // SHOULD BE IN EVERY FILE!
 
-#define GLSL_VERSION            330
+#define GLSL_VERSION 330
 
 namespace material
 {
@@ -20,45 +20,45 @@ namespace material
 	std::map<str, BobMaterial> mats;
 	// string shadername -> shader
 	std::map<str, Shader> shaders;
-	
+
 	bool init()
 	{
-		LOG_F(INFO, "Initializing Materials");
+		LOG_F( INFO, "Initializing Materials" );
 
-		if (!initShaders())
+		if ( !initShaders() )
 		{
-			LOG_F(FATAL, "Could not initialise shaders!");
+			LOG_F( FATAL, "Could not initialise shaders!" );
 			return false;
 		}
 
-		matMissing = loadMaterial("missing.json", false);
+		matMissing = loadMaterial( "missing.json", false );
 
 		return true;
 	}
 
 	bool initShaders()
 	{
-		LOG_F(INFO, "Initializing Shaders");
+		LOG_F( INFO, "Initializing Shaders" );
 
-		if (!ChangeDirectory("shaders"))
+		if ( !ChangeDirectory( "shaders" ) )
 		{
-			LOG_F(ERROR, "Could not change to shader directory!");
+			LOG_F( ERROR, "Could not change to shader directory!" );
 			return false;
 		}
 
 		// Attempt to load shaders/shaders.json
-		std::ifstream file("shaders.json");
+		std::ifstream file( "shaders.json" );
 		json j;
 		file >> j;
 
 		std::cout << j << std::endl;
 
-		for (json shaderdef : j)
+		for ( json shaderdef : j )
 		{
 			str name; // Name of the shader
 			// NOTE: The following are only ever given to raylib, so we don't need them to be c++ strings
 			const char *fs; // frag shader
-			const char* vs; // vert shader
+			const char *vs; // vert shader
 
 			Shader shader; // raylib shader object
 
@@ -70,41 +70,41 @@ namespace material
 			name = shaderdef["name"].get<str>();
 
 			// Allow forcing use of raylib internal vertex shader
-			if (char(vs[0]) == '0')
+			if ( char( vs[0] ) == '0' )
 			{
 				// Now we tell raylib to compile the shader for us
-				shaders[name] = LoadShader(NULL, fs);
+				shaders[name] = LoadShader( NULL, fs );
 			}
 			else
 			{
 				// Now we tell raylib to compile the shader for us
-				shaders[name] = LoadShader(vs, fs);
+				shaders[name] = LoadShader( vs, fs );
 			}
 
 			// and do some logging
-			LOG_F(INFO, "Loaded shader %s with ID %i.", name.c_str(), shader.id);
+			LOG_F( INFO, "Loaded shader %s with ID %i.", name.c_str(), shader.id );
 		}
 
-		ChangeDirectory("..");
+		ChangeDirectory( ".." );
 
 		return true;
 	}
 
-	Shader getShader(str name)
+	Shader getShader( str name )
 	{
 		return shaders[name];
 	}
 
 	// Load texture at fp, relative to the materials/ folder.
 	// giveError will choose if it returns the error texture or not.
-	BobMaterial loadMaterial(str fp, bool giveError)
+	BobMaterial loadMaterial( str fp, bool giveError )
 	{
-		ChangeDirectory("materials");
-		
+		ChangeDirectory( "materials" );
+
 		// We have it loaded already
-		if (mats.find(fp) != mats.end())
+		if ( mats.find( fp ) != mats.end() )
 		{
-			ChangeDirectory("..");
+			ChangeDirectory( ".." );
 			return mats[fp];
 		}
 
@@ -115,33 +115,33 @@ namespace material
 		// 	ChangeDirectory("..");
 		// }
 
-		for (auto& t : shaders)
+		for ( auto &t : shaders )
 			std::cout << t.first << " " << t.second.id << std::endl;
 
-		std::ifstream file(fp);
+		std::ifstream file( fp );
 		json j;
 		file >> j;
 
-		str texpath; // "image":
+		str texpath;	// "image":
 		str shadername; // "shader":
 
 		texpath = j["image"].get<str>();
 		shadername = j["shader"].get<str>();
 
-		if (shaders.find(shadername) == shaders.end())
+		if ( shaders.find( shadername ) == shaders.end() )
 		{
-			LOG_F(ERROR, "Invalid Material; %s", shadername);
+			LOG_F( ERROR, "Invalid Material; %s", shadername );
 			return matMissing;
 		}
 
-		Texture tex = LoadTexture(texpath.c_str());
+		Texture tex = LoadTexture( texpath.c_str() );
 		Shader shader = shaders[shadername];
 
 		BobMaterial mat;
 		mat.tex = tex;
 		mat.shader = shader;
 
-		ChangeDirectory("..");
+		ChangeDirectory( ".." );
 		return mat;
 	}
-}
+} // namespace material
