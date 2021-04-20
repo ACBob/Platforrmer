@@ -1,8 +1,16 @@
+// A level file, written by hand!
+// Editors should be pretty easy to make.
+// Although I'm not sure many JSON loaders support comments!
 {
+	// Name is used on the worldmap.
+	// Description is used... somewhere. maybe.
 	"name": "TEST_LEVEL",
 	"desc": "Testing level",
 	"blocks": [
 		{
+			// Position is in multiples of 16.
+			// Type defines what kind of tile it is, referenced in surfaceproperties.json
+			// tex sets the texture of a tile, set it to DEFAULT to have the level loader ignore it.
 			"pos": [0.0,0.5],
 			"type": "TL_GRND",
 			"tex": "DEFAULT"
@@ -50,6 +58,10 @@
 	],
 	"entities": [
 		{
+			// Like tiles, Position is in multiples of 16.
+			// I.e here it's 2x16, -3x16
+			// Entity properties are... In the works.
+			// Here, bounciness is to control the bouncy factor of the ball.
 			"entname": "phys_ball",
 			"pos": [2,-3],
 			"bounciness": 1
@@ -60,6 +72,7 @@
 			"bounciness": 0.2
 		},
 		{
+			// Intentionally invalid to test entity error handling.
 			"entname": "intentionally invalid",
 			"pos": [69,420]
 		}
