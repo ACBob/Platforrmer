@@ -89,21 +89,22 @@ int main( int argc, char *argv[] )
 		Camera.target = player->GetPosition();
 
 		BeginDrawing();
-		ClearBackground( RED );
+		{
+			ClearBackground( RED );
 
-		// Draw Sky
-		BeginShaderMode( skyShader );
-		DrawRectangle( 0, 0, config.screenW, config.screenH, WHITE );
-		EndShaderMode();
+			// Draw Sky
+			BeginShaderMode( skyShader );
+			DrawRectangle( 0, 0, config.screenW, config.screenH, WHITE );
+			EndShaderMode();
 
-		BeginMode2D( Camera );
+			BeginMode2D( Camera );
+			{
+				world.Render( config.debugMode );
+			}
+			EndMode2D();
 
-		world.Render( config.debugMode );
-
-		EndMode2D();
-
-		DrawFPS( 0, 0 );
-
+			DrawFPS( 0, 0 );
+		}
 		EndDrawing();
 
 		entWorld->FrameEnd( delta );
