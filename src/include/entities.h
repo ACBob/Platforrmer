@@ -196,7 +196,7 @@ namespace entities
 
 			// Start tracking it
 			return (T *)AddEntity( &ent );
-		};
+		}
 
 		b2World *GetPhysWorld()
 		{

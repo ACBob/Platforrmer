@@ -130,7 +130,7 @@ namespace material
 
 		if ( shaders.find( shadername ) == shaders.end() )
 		{
-			LOG_F( ERROR, "Invalid Material; %s", shadername );
+			LOG_F( ERROR, "Invalid Material; %s", shadername.c_str() );
 			return matMissing;
 		}
 

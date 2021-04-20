@@ -24,7 +24,7 @@ configStruct loadConfig( str fp )
 	json confjson;
 
 	std::ifstream f( fp );
-	confjson << f;
+	f >> confjson;
 
 	conf.screenW = confjson["screenSize"][0].get<int>();
 	conf.screenH = confjson["screenSize"][1].get<int>();
