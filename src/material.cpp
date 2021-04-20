@@ -120,7 +120,16 @@ namespace material
 
 		std::ifstream file( fp );
 		json j;
-		file >> j;
+		try
+		{
+			j = json::parse(file, nullptr, true, true);
+		}
+		catch(json::parse_error &e)
+		{
+			LOG_F(ERROR, "Material file %s is malformed! (ERROR %i)", fp.c_str(), e.id);
+			LOG_F(ERROR, e.what());
+			return matMissing;
+		}
 
 		str texpath;	// "image":
 		str shadername; // "shader":

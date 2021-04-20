@@ -67,9 +67,9 @@ int main( int argc, char *argv[] )
 	Camera.offset = Vector( config.screenW / 2, config.screenH / 2 );
 	Camera.zoom = 2.0f;
 
-	LOG_F( INFO, "Attempt to load level file" );
+	LOG_F( INFO, "Loading debug level..." );
 
-	EntityLevel world = loadLevel( "level.json" );
+	EntityLevel world = loadLevel( "devland.json" );
 	entities::World *entWorld = world.GetWorld();
 
 	entWorld->physStep = 1.0f / config.frameRate;

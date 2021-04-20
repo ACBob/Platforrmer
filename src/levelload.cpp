@@ -52,11 +52,22 @@ std::map<str, int> entids = { { "base", 0 }, { "player", 0 }, { "tile", 0 }, { "
 
 EntityLevel loadLevel( str fp )
 {
+	ChangeDirectory("levels");
 	EntityLevel level;
 
-	std::ifstream file( fp );
 	json j;
-	file >> j;
+
+	std::ifstream f( fp );
+	try
+	{
+		j = json::parse(f, nullptr, true);
+	}
+	catch(json::parse_error& e)
+	{
+		LOG_F(ERROR, "Level file %s is malformed! (ERROR %i)", fp.c_str(), e.id);
+		LOG_F(ERROR, e.what());
+		return level; // Return blank level
+	}
 
 	// Load blocks
 	for ( json blockdef : j["blocks"] )
@@ -143,5 +154,6 @@ EntityLevel loadLevel( str fp )
 		ent->SetPosition( pos );
 	}
 
+	ChangeDirectory("..");
 	return level;
 }

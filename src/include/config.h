@@ -24,7 +24,15 @@ configStruct loadConfig( str fp )
 	json confjson;
 
 	std::ifstream f( fp );
-	f >> confjson;
+	try
+	{
+		confjson = json::parse(f, nullptr, true, true);
+	}
+	catch(json::parse_error &e)
+	{
+		LOG_F(ERROR, "Config file is malformed! (ERROR %i)", e.id);
+		LOG_F(FATAL, e.what());
+	}
 
 	conf.screenW = confjson["screenSize"][0].get<int>();
 	conf.screenH = confjson["screenSize"][1].get<int>();

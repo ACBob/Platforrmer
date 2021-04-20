@@ -1,5 +1,8 @@
 {
+	// Controls the size of the screen.
 	"screenSize": [800, 416],
+	// Enables debugging magic!... Namely rendering and some other goodies, at some point.
 	"enableDebug": true,
+	// Framerate to try and run at. Going too high (excess of 3,000) will make the physics engine stop working!
 	"frameRate": 60
 }
