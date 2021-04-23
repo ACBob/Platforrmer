@@ -23,7 +23,7 @@ add_subdirectory(src/thirdparty/box2d)
 
 # Includes
 set(includes
-	include
+	headers
 	thirdparty/box2d/include
 	thirdparty
 )
