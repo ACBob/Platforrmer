@@ -100,7 +100,7 @@ namespace entities
 		bodyDef.type = b2_dynamicBody; // TODO: Would kinematic be better?
 		bodyDef.position.Set( 0.0f, 0.0 );
 		// Don't spin
-		// bodyDef.fixedRotation = true;
+		bodyDef.fixedRotation = true;
 		physBody = world->CreateBody( &bodyDef );
 
 		b2PolygonShape shape;
