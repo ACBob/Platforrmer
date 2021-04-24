@@ -2,6 +2,12 @@ cmake_minimum_required(VERSION 3.16)
 
 project(Platforrmer)
 
+# If no build type is specified, Build in release.
+if(${CMAKE_BUILD_TYPE})
+else()
+	set(CMAKE_BUILD_TYPE Release)
+endif()
+
 # Set C flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic -Wno-unused-parameter -Wno-missing-field-initializers")
 
@@ -10,7 +16,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Put the game executable in /bin
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
-
+# Set the opengl preference, as right now Raylib doesn't
+set(OpenGL_GL_PREFERENCE GLVND)
 
 # Setting parameters for raylib
 set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE) # don't build the supplied examples
